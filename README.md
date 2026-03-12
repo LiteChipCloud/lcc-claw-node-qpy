@@ -219,4 +219,5 @@ lcc-claw-node-qpy/
 |---|---|
 | [docs/github-release-kit.md](docs/github-release-kit.md) | GitHub `About`、Topics、首版标签与发布清单 |
 | [docs/releases/v1.0.0-rc1.md](docs/releases/v1.0.0-rc1.md) | 首个公开候选版 Release Notes 草稿 |
+| [docs/release-assets.md](docs/release-assets.md) | GitHub prerelease 资产清单与生成方式 |
 | [docs/validation/72h-soak验证方案.md](docs/validation/72h-soak验证方案.md) | `72h soak` 稳定性验证方案与门禁 |

@@ -77,8 +77,14 @@ GitHub Topics 需使用小写英文和连字符，建议首发配置如下：
 | GitHub 自动源码包 | 是 | 默认即可 |
 | `usr_mirror/` 运行时压缩包 | 是 | 方便设备侧用户直接部署 |
 | `examples/` 配置示例压缩包 | 是 | 降低首次接入门槛 |
+| 离线文档包 | 是 | 便于现场部署和离线阅读 |
+| `SHA256SUMS.txt` | 是 | 用于下载校验 |
 | Release Notes Markdown | 是 | 建议直接粘贴到 GitHub Release 正文 |
 | Windows/Host 辅助脚本单独压缩包 | 可选 | 如需突出 `remote_signer_http` 可单独附带 |
+
+资产生成细节见：
+
+- [docs/release-assets.md](./release-assets.md)
 
 ## 7. 首发 Release Notes 结构
 
@@ -106,6 +112,7 @@ GitHub Topics 需使用小写英文和连字符，建议首发配置如下：
 | `node --check tools/remote_signer_http.mjs` | 必须通过 |
 | GitHub About/Topics | 已按本文件配置 |
 | Release Notes | 已使用 `docs/releases/v1.0.0-rc1.md` 收口 |
+| Release Assets | 已按 `docs/release-assets.md` 生成并附加到 draft prerelease |
 | `72h soak` | 通过前不升格稳定版 `v1.0.0` |
 
 ## 9. 结论

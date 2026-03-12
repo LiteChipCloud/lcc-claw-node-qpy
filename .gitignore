@@ -1,4 +1,5 @@
 tools/.state/
+dist/
 review/
 __pycache__/
 *.pyc
