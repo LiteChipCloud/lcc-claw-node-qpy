@@ -33,17 +33,20 @@ EXCLUDE_DIRS = {
 PATTERNS = {
     "private_key_block": re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
     "password_assignment": re.compile(r"(?i)(password|passwd|pwd|secret)\s*[:=]\s*['\"]?[^\s'\"]+"),
-    "token_like": re.compile(r"(?i)(token|api[_-]?key|access[_-]?key)\s*[:=]\s*['\"]?[^\s'\"]+"),
+    "token_like": re.compile(r"(?i)(token|api[_-]?key|access[_-]?key)\s*[:=]\s*['\"][^'\"]+['\"]"),
     "private_ip": re.compile(r"\b(10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3})\b"),
     "imei_like": re.compile(r"\b\d{15}\b"),
     "iccid_like": re.compile(r"\b\d{19,20}\b"),
     "imsi_like": re.compile(r"\b\d{15}\b"),
+    "github_pat": re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"),
 }
 
 ALLOWLINE_PATTERNS = [
     re.compile(r"(?i)<token>"),
     re.compile(r"(?i)replace_with_your_token"),
     re.compile(r"(?i)your[_-]?token"),
+    re.compile(r"(?i)replace_me"),
+    re.compile(r"(?i)<optional-signer-token>"),
 ]
 
 
