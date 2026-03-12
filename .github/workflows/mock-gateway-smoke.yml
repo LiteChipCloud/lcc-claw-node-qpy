@@ -1,0 +1,21 @@
+name: mock-gateway-smoke
+
+on:
+  pull_request:
+  push:
+    branches: ["main", "develop", "release/**"]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Start mock gateway
+        run: |
+          python3 tests/mock_gateway/mock_gateway.py --host 127.0.0.1 --port 18789 > /tmp/mock-gw.log 2>&1 &
+          sleep 1
+      - name: Run tcp reachability smoke
+        run: python3 tests/mock_gateway/tcp_reachability_smoke.py

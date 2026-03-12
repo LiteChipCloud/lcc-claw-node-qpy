@@ -1,93 +1,134 @@
 # lcc-claw-node-qpy
 
-QuecPython node runtime for official OpenClaw (OSS community edition). Managed by LiteChipCloud.
+> QuecPython 设备连接 OpenClaw 的社区版运行时（零改官方 Gateway 基线）
 
-## Getting started
+**维护单位：芯寰云（上海）科技有限公司**
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 1. 项目定位
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+`lcc-claw-node-qpy` 是面向社区用户的 QuecPython 设备运行时，目标是让设备在不修改 OpenClaw Gateway 源码的前提下，完成稳定的控制面连接与命令执行闭环。
 
-## Add your files
+当前版本聚焦 `ws_native` 最小可用闭环：
+1. 建链（WebSocket connect）
+2. 保活（heartbeat）
+3. 下发（invoke request）
+4. 回执（invoke result）
+5. 重连（reconnect）
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## 2. 架构总览（图）
 
+```mermaid
+flowchart LR
+  A["QuecPython Device"] --> B["lcc-claw-node-qpy Runtime"]
+  B --> C["ws_native Transport"]
+  C --> D["OpenClaw Gateway (Official)"]
+  D --> C
+  B --> E["Tool Runner"]
+  E --> F["Built-in Tools"]
+  F --> E
+  E --> C
 ```
-cd existing_repo
-git remote add origin http://gitlab.lcc.local/lcc/lcc-claw-node-qpy.git
-git branch -M main
-git push -uf origin main
+
+## 3. 执行链路（图）
+
+```mermaid
+sequenceDiagram
+  participant GW as OpenClaw Gateway
+  participant RT as QPY Runtime
+  participant TR as ToolRunner
+  participant TL as Tool
+
+  RT->>GW: connect + auth payload
+  GW-->>RT: connected / session accepted
+  RT->>GW: heartbeat (periodic)
+  GW-->>RT: node.invoke.request
+  RT->>TR: dispatch(request)
+  TR->>TL: execute(args)
+  TL-->>TR: result / error
+  TR-->>RT: normalized result
+  RT-->>GW: node.invoke.result
 ```
 
-## Integrate with your tools
+## 4. 能力矩阵
 
-- [ ] [Set up project integrations](http://gitlab.lcc.local/lcc/lcc-claw-node-qpy/-/settings/integrations)
+| 能力域 | v1.0 状态 | 说明 |
+|---|---|---|
+| 官方 OpenClaw 基线兼容 | 已支持 | 不要求改造 Gateway 源码 |
+| WebSocket 控制平面 | 已支持 | connect/heartbeat/reconnect |
+| 工具调用闭环 | 已支持 | request -> tool -> result |
+| 本地仿真验证 | 已支持 | mock gateway smoke |
+| 脱敏与开源边界 | 已支持 | 白名单 + 关键词扫描 |
+| 企业控制面增强 | 规划外 | 属于内部版路线 |
 
-## Collaborate with your team
+## 5. 使用环境说明
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+| 场景 | 说明 | 推荐 |
+|---|---|---|
+| 设备直连官方 OpenClaw | 社区默认路径 | 高 |
+| 局域网联调（Mock Gateway） | 开发验证与回归 | 高 |
+| 企业规模化控制平面 | 需内部架构增强 | 中（不在 OSS v1.0） |
 
-## Test and Deploy
+## 6. 快速开始
 
-Use the built-in continuous integration in GitLab.
+1. 阅读 [docs/quickstart.md](docs/quickstart.md)。
+2. 复制 [examples/config.ws_native.example.py](examples/config.ws_native.example.py) 并填写你的网关地址、token、device_id。
+3. 将 `usr_mirror/*` 部署到设备 `/usr`。
+4. 运行 `/usr/_main.py` 并观察连接日志。
+5. 使用 `tests/mock_gateway` 做本地闭环验证。
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## 7. 仓库结构
 
-***
+```text
+lcc-claw-node-qpy/
+├── usr_mirror/
+│   ├── _main.py
+│   └── app/
+│       ├── agent.py
+│       ├── config.py
+│       ├── transport_ws_openclaw.py
+│       ├── tool_runner.py
+│       └── tools/
+├── examples/
+├── docs/
+│   ├── quickstart.md
+│   ├── compatibility-matrix.md
+│   ├── troubleshooting.md
+│   ├── open-source-whitelist.md
+│   ├── sanitization-rules.md
+│   └── design/
+├── tests/
+├── tools/
+└── .github/
+```
 
-# Editing this README
+## 8. 详细设计文档
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+| 文档 | 说明 |
+|---|---|
+| [docs/design/00-设计文档索引.md](docs/design/00-设计文档索引.md) | 设计文档总览与阅读顺序 |
+| [docs/design/01-总体架构设计.md](docs/design/01-总体架构设计.md) | 分层架构、模块职责、部署模型 |
+| [docs/design/02-连接鉴权与会话状态机.md](docs/design/02-连接鉴权与会话状态机.md) | 连接流程、鉴权模型、状态机 |
+| [docs/design/03-工具执行与结果回传设计.md](docs/design/03-工具执行与结果回传设计.md) | 工具调度、错误模型、回执契约 |
+| [docs/design/04-可靠性与安全设计.md](docs/design/04-可靠性与安全设计.md) | 重连策略、幂等、脱敏与风控 |
 
-## Suggestions for a good README
+## 9. 安全与开源收口
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+发布前必须执行：
+1. `python3 tools/sanitize_check.py --root .`
+2. 对照 [docs/open-source-whitelist.md](docs/open-source-whitelist.md) 检查文件边界
+3. 对照 [docs/sanitization-rules.md](docs/sanitization-rules.md) 检查日志与配置脱敏
 
-## Name
-Choose a self-explaining name for your project.
+## 10. 路线图
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+1. `v1.0`: `ws_native` 最小稳定闭环（当前）。
+2. `v1.1`: 工具能力扩展与错误模型细化。
+3. `v1.2`: 增强回归矩阵与稳定性基线。
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## 11. 相关项目
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+1. [QuecPython Dev Skill](https://github.com/LiteChipCloud/quecpython-dev-skill)
+2. [Windows SSH Control Skill](https://github.com/LiteChipCloud/windows-ssh-control-skill)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## 12. 许可证
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+本仓库采用 MIT License，详见 [LICENSE](LICENSE)。

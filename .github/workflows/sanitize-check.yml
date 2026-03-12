@@ -1,0 +1,17 @@
+name: sanitize-check
+
+on:
+  pull_request:
+  push:
+    branches: ["main", "develop", "release/**"]
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run sanitize checker
+        run: python3 tools/sanitize_check.py --root .
