@@ -2,20 +2,63 @@
 # Copy values into /usr/app/config.py on device.
 
 DEVICE_ID = "dev_your_id"
+DEVICE_NAME = "My QuecPython Node"
 TENANT_ID = "tenant_your_id"
 ACCESS_MODE = "ws_native"
 
 OPENCLAW_WS_URL = "ws://<gateway-host>:18789"
+OPENCLAW_ROLE = "node"
+OPENCLAW_CLIENT_ID = "node-host"
+OPENCLAW_CLIENT_MODE = "node"
+OPENCLAW_CLIENT_PLATFORM = "quectel"
+OPENCLAW_CLIENT_DEVICE_FAMILY = "quecpython"
+OPENCLAW_CLIENT_DISPLAY_NAME = DEVICE_NAME
+OPENCLAW_USER_AGENT = "lcc-claw-node-qpy/1.0.0"
 OPENCLAW_AUTH_TOKEN = "<token>"
 
-HEARTBEAT_INTERVAL_SEC = 15
-RECONNECT_BACKOFF_SEC = 5
-MAX_CMD_EXEC_SEC = 10
+# Set to "none" when your Gateway allows token-only path.
+# Set to "remote_signer_http" when the Gateway enforces official device identity.
+OPENCLAW_DEVICE_AUTH_MODE = "none"
+REMOTE_SIGNER_HTTP_URL = "http://<signer-host>:8787/sign"
+REMOTE_SIGNER_HTTP_AUTH_TOKEN = "<optional-signer-token>"
+REMOTE_SIGNER_HTTP_TIMEOUT_SEC = 5
+REMOTE_SIGNER_HTTP_HEADERS = {}
 
-ALLOW_TOOLS = [
+HEARTBEAT_INTERVAL_SEC = 15
+TELEMETRY_INTERVAL_SEC = 60
+RECONNECT_BACKOFF_SEC = 5
+CONNECT_TIMEOUT_SEC = 8
+ACK_TIMEOUT_MS = 5000
+READ_POLL_MS = 200
+MAX_CMD_EXEC_SEC = 10
+OUTBOX_MAX = 64
+DEDUPE_WINDOW = 64
+MAX_RETRY = 3
+SENSITIVE_MASK = True
+
+OPENCLAW_CAPS = [
+    "diagnostics",
+    "network",
+    "telemetry",
+]
+
+OPENCLAW_COMMANDS = [
+    "qpy.device.info",
+    "qpy.device.status",
+    "qpy.net.diag",
+    "qpy.sim.info",
+    "qpy.cell.info",
+    "qpy.runtime.status",
+    "qpy.tools.catalog",
     "tool_device_info",
     "tool_net_diag",
 ]
 
+ALLOW_TOOLS = OPENCLAW_COMMANDS
+OPENCLAW_SCOPES = []
+OPENCLAW_PERMISSIONS = {}
+
 SAFE_MODE = False
-FW_VERSION = "v0.1.0"
+SAFE_MODE_FAILURE_THRESHOLD = 6
+SAFE_MODE_COOLDOWN_SEC = 30
+FW_VERSION = "v1.0.0"

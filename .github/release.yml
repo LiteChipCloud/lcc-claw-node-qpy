@@ -1,0 +1,31 @@
+changelog:
+  categories:
+    - title: 新能力
+      labels:
+        - enhancement
+        - feature
+        - type::feature
+    - title: 缺陷修复
+      labels:
+        - bug
+        - fix
+        - type::bug
+    - title: 文档与示例
+      labels:
+        - documentation
+        - docs
+    - title: 安全与合规
+      labels:
+        - security
+        - compliance
+    - title: 兼容性与发布
+      labels:
+        - compatibility
+        - release
+  exclude:
+    labels:
+      - duplicate
+      - invalid
+      - question
+      - wontfix
+      - skip-changelog
