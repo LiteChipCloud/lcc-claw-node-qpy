@@ -1,0 +1,36 @@
+{
+  "capturedAt": "2026-03-14T05:12:00+08:00",
+  "operatorWindowAttempt1": {
+    "json": "docs/validation/evidence/20260314-alert-injection/operator-event-window.json",
+    "events": ["connect.challenge", "health", "heartbeat", "tick", "health"],
+    "note": "first attempt overlapped with a REPL payload that entered continuation prompt"
+  },
+  "operatorWindowAttempt2": {
+    "json": "docs/validation/evidence/20260314-alert-injection/operator-event-window-retry.json",
+    "events": ["connect.challenge", "health", "tick", "health"],
+    "sawAlert": false,
+    "sawNodeEvent": false
+  },
+  "deviceInjectionAttempt2": {
+    "log": "docs/validation/evidence/20260314-alert-injection/windows-alert-inject-retry.txt",
+    "beforeOnline": true,
+    "transport": "ok",
+    "queueCalled": true,
+    "flushReturned": false,
+    "afterOutboxDepth": 0,
+    "marker": "alert_injected_retry"
+  },
+  "postSnapshot": {
+    "online": true,
+    "outboxDepth": 0,
+    "lastErrorCode": "OUTBOX_SEND_FAILED",
+    "lastError": "pop from empty list",
+    "lastOutboxError": "pop from empty list"
+  },
+  "conclusion": {
+    "deviceSideInjectionReachedTransport": true,
+    "operatorObservedAlert": false,
+    "operatorObservedNodeEvent": false,
+    "currentHypothesis": "operator sessions do not expose device node.event directly, and the current QuecPython transport also hits an outbox error path during test alert send"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-03-14T15:06:00+08:00",
+  "deviceScript": {
+    "path": "/usr/qpy_alert_queue_skill.py",
+    "pushOk": true,
+    "remoteSize": 1373,
+    "runOk": true,
+    "beforeOnline": true,
+    "transport": "ok",
+    "queueCalled": true,
+    "afterOutbox": 1,
+    "afterLastOutboxError": ""
+  },
+  "postInvokeRuntimeStatus": {
+    "online": true,
+    "outboxDepth": 0,
+    "lastErrorCode": "",
+    "lastOutboxError": "",
+    "resultCacheDepth": 3
+  },
+  "postInvokeDeviceStatus": {
+    "online": true,
+    "outboxDepth": 0,
+    "pendingCmds": 1,
+    "sentFrames": 237,
+    "lastAckMs": 3807949,
+    "lastErrorCode": "",
+    "lastOutboxError": ""
+  },
+  "operatorWindow": {
+    "durationSec": 40,
+    "visibleEvents": [
+      "connect.challenge",
+      "health",
+      "tick"
+    ],
+    "nodeEventVisible": false,
+    "alertVisible": false
+  },
+  "conclusion": {
+    "deviceSideQueuePathHealthy": true,
+    "transportOutboxFailureReproduced": false,
+    "remainingBlocker": "operator/node.event observability"
+  }
+}

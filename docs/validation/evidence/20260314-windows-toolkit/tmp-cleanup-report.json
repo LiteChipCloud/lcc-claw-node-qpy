@@ -1,0 +1,113 @@
+{
+  "ok": true,
+  "policy": "REPORT_ONLY_DEFAULT",
+  "apply": false,
+  "port": "COM6",
+  "baud": 921600,
+  "paths": [
+    "/usr/app",
+    "/usr/app/tools"
+  ],
+  "include_rollback": false,
+  "summary": {
+    "total_temp_entries": 7,
+    "delete_candidates": 7,
+    "skipped": 0,
+    "deleted": 0,
+    "delete_failed": 0
+  },
+  "scan_errors": [],
+  "entries": [
+    {
+      "dir": "/usr/app",
+      "path": "/usr/app/command_worker.py.upload_1773421538485.tmp",
+      "name": "command_worker.py.upload_1773421538485.tmp",
+      "kind": "upload_tmp",
+      "temp_size": 3840,
+      "live_name": "command_worker.py",
+      "live_path": "/usr/app/command_worker.py",
+      "live_exists": true,
+      "live_size": 3886,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    },
+    {
+      "dir": "/usr/app",
+      "path": "/usr/app/runtime_state.py.tmp",
+      "name": "runtime_state.py.tmp",
+      "kind": "plain_tmp",
+      "temp_size": 6144,
+      "live_name": "runtime_state.py",
+      "live_path": "/usr/app/runtime_state.py",
+      "live_exists": true,
+      "live_size": 6707,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    },
+    {
+      "dir": "/usr/app",
+      "path": "/usr/app/transport_ws_openclaw.py.tmp",
+      "name": "transport_ws_openclaw.py.tmp",
+      "kind": "plain_tmp",
+      "temp_size": 7680,
+      "live_name": "transport_ws_openclaw.py",
+      "live_path": "/usr/app/transport_ws_openclaw.py",
+      "live_exists": true,
+      "live_size": 16339,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    },
+    {
+      "dir": "/usr/app/tools",
+      "path": "/usr/app/tools/tool_probe.py.tmp",
+      "name": "tool_probe.py.tmp",
+      "kind": "plain_tmp",
+      "temp_size": 768,
+      "live_name": "tool_probe.py",
+      "live_path": "/usr/app/tools/tool_probe.py",
+      "live_exists": true,
+      "live_size": 12814,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    },
+    {
+      "dir": "/usr/app/tools",
+      "path": "/usr/app/tools/tool_probe.py.upload_1773419511131.tmp",
+      "name": "tool_probe.py.upload_1773419511131.tmp",
+      "kind": "upload_tmp",
+      "temp_size": 4608,
+      "live_name": "tool_probe.py",
+      "live_path": "/usr/app/tools/tool_probe.py",
+      "live_exists": true,
+      "live_size": 12814,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    },
+    {
+      "dir": "/usr/app/tools",
+      "path": "/usr/app/tools/tool_probe.py.upload_1773422526767.tmp",
+      "name": "tool_probe.py.upload_1773422526767.tmp",
+      "kind": "upload_tmp",
+      "temp_size": 3648,
+      "live_name": "tool_probe.py",
+      "live_path": "/usr/app/tools/tool_probe.py",
+      "live_exists": true,
+      "live_size": 12814,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    },
+    {
+      "dir": "/usr/app/tools",
+      "path": "/usr/app/tools/tool_probe.py.upload_1773422732061.tmp",
+      "name": "tool_probe.py.upload_1773422732061.tmp",
+      "kind": "upload_tmp",
+      "temp_size": 12672,
+      "live_name": "tool_probe.py",
+      "live_path": "/usr/app/tools/tool_probe.py",
+      "live_exists": true,
+      "live_size": 12814,
+      "decision": "delete_candidate",
+      "reason": "paired live file exists"
+    }
+  ]
+}

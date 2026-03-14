@@ -1,0 +1,121 @@
+{
+  "capturedAt": "2026-03-14T18:49:55+08:00",
+  "startedAt": "2026-03-14T17:55:13+08:00",
+  "checkpointSample": 12,
+  "samples": {
+    "total": 13,
+    "successful": 13,
+    "failed": 0,
+    "consecutiveFailures": 0,
+    "lastSampleFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak-run2/samples/0013-qpy_runtime_status.json",
+    "lastSuccessAt": "2026-03-14T18:49:55+08:00",
+    "lastFailureAt": null
+  },
+  "runtime": {
+    "runs": 9,
+    "durationsMs": [
+      371,
+      369,
+      639,
+      803,
+      800,
+      843,
+      374,
+      345,
+      807
+    ],
+    "p95Ms": 843,
+    "lastSummary": {
+      "online": true,
+      "reconnect_count": 0,
+      "last_error_code": "",
+      "outbox_depth": 0,
+      "status": "succeeded",
+      "result_code": "OK"
+    }
+  },
+  "device": {
+    "runs": 4,
+    "durationsMs": [
+      16922,
+      17628,
+      16902,
+      16792
+    ],
+    "p95Ms": 17628,
+    "lastSummary": {
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 16329,
+      "runtime": {
+        "online": true,
+        "reconnect_count": 0,
+        "last_error_code": "",
+        "last_outbox_error": "",
+        "outbox_depth": 0
+      }
+    }
+  },
+  "catalog": {
+    "runs": 2,
+    "durationsMs": [
+      506,
+      365
+    ],
+    "p95Ms": 506
+  },
+  "events": {
+    "totalObserved": 74,
+    "operatorVisibleEvents": [
+      "connect.challenge",
+      "health",
+      "heartbeat",
+      "tick"
+    ],
+    "nodeEventVisible": false,
+    "lastObservedAt": "2026-03-14T18:49:55+08:00"
+  },
+  "remoteSignerObserved": true,
+  "reconnectCountSeries": [
+    {
+      "ts": "2026-03-14T17:57:05+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:03:42+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:10:17+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:16:54+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:23:31+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:30:07+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:36:43+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:43:19+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:49:55+08:00",
+      "value": 0
+    }
+  ],
+  "attentionFlags": [
+    "node.event frames not directly visible to operator session"
+  ],
+  "status": "running-stable-checkpoint-0012"
+}

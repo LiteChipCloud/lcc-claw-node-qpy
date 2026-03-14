@@ -1,0 +1,185 @@
+{
+  "capturedAt": "2026-03-14T20:01:40+08:00",
+  "startedAt": "2026-03-14T17:55:13+08:00",
+  "checkpointSample": 32,
+  "samples": {
+    "total": 32,
+    "successful": 26,
+    "failed": 6,
+    "consecutiveFailures": 1,
+    "lastSampleFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak-run2/samples/0032-qpy_device_status.json",
+    "lastSuccessAt": "2026-03-14T20:01:10+08:00",
+    "lastFailureAt": "2026-03-14T20:01:40+08:00"
+  },
+  "runtime": {
+    "runs": 19,
+    "durationsMs": [
+      371,
+      369,
+      639,
+      803,
+      800,
+      843,
+      374,
+      345,
+      807,
+      855,
+      798,
+      821,
+      879,
+      835,
+      800,
+      677,
+      802,
+      374,
+      854
+    ],
+    "p95Ms": 855,
+    "lastSummary": {
+      "online": true,
+      "reconnect_count": 0,
+      "last_error_code": "OUTBOX_SEND_FAILED",
+      "outbox_depth": 0,
+      "status": "succeeded",
+      "result_code": "OK"
+    }
+  },
+  "device": {
+    "runs": 9,
+    "durationsMs": [
+      16922,
+      17628,
+      16902,
+      16792,
+      30017,
+      30014,
+      30020,
+      30011,
+      30012
+    ],
+    "p95Ms": 30020,
+    "lastSummary": {
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 16329,
+      "runtime": {
+        "online": true,
+        "reconnect_count": 0,
+        "last_error_code": "",
+        "last_outbox_error": "",
+        "outbox_depth": 0,
+        "worker_busy": true,
+        "inflight_cmd_tool": "qpy.device.status",
+        "tool_exec_finished_ms": 0
+      }
+    },
+    "lastError": "node.invoke failed for qpy.device.status: {\"code\": \"UNAVAILABLE\", \"message\": \"TIMEOUT: node invoke timed out\", \"details\": {\"nodeError\": {\"code\": \"TIMEOUT\", \"message\": \"node invoke timed out\"}}}"
+  },
+  "catalog": {
+    "runs": 5,
+    "durationsMs": [
+      506,
+      365,
+      833,
+      547,
+      678
+    ],
+    "p95Ms": 833
+  },
+  "events": {
+    "totalObserved": 169,
+    "operatorVisibleEvents": [
+      "connect.challenge",
+      "health",
+      "heartbeat",
+      "tick"
+    ],
+    "nodeEventVisible": false,
+    "lastObservedAt": "2026-03-14T20:01:40+08:00"
+  },
+  "remoteSignerObserved": true,
+  "reconnectCountSeries": [
+    {
+      "ts": "2026-03-14T17:57:05+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:03:42+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:10:17+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:16:54+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:23:31+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:30:07+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:36:43+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:43:19+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:49:55+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:56:32+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:03:09+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:09:45+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:16:22+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:22:58+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:29:34+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:36:11+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:42:48+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T19:49:24+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T20:01:10+08:00",
+      "value": 0
+    }
+  ],
+  "attentionFlags": [
+    "node.event frames not directly visible to operator session",
+    "qpy.device.status failures observed",
+    "qpy.device.status latency breached 30000ms"
+  ],
+  "status": "running-regressed-checkpoint-0032"
+}

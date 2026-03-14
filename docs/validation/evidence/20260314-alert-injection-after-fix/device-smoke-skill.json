@@ -1,0 +1,93 @@
+{
+  "generated_at": "2026-03-14T06:57:12",
+  "context": {
+    "risk_mode": "safe",
+    "at_port": "COM7",
+    "at_baud": 115200,
+    "repl_port": "COM6",
+    "repl_baud": 921600,
+    "qpycom": "",
+    "qpycom_enabled": false,
+    "auto_ports": true,
+    "effective_skip_deploy": true,
+    "ls_via": "repl",
+    "deploy_via": "repl",
+    "policy_notes": [
+      "safe mode: disable QPYcom operations, disable deploy/import checks, and disable QPYcom process kill."
+    ],
+    "kill_qpycom_mode": "off",
+    "kill_qpycom_result": "off",
+    "force_kill_guard_enabled": false,
+    "discovered_ports": [
+      {
+        "port": "COM4",
+        "name": "COM4"
+      },
+      {
+        "port": "COM5",
+        "name": "COM5"
+      },
+      {
+        "port": "COM6",
+        "name": "COM6"
+      },
+      {
+        "port": "COM7",
+        "name": "COM7"
+      }
+    ],
+    "role_map": {
+      "at": "",
+      "diag": "",
+      "repl": ""
+    },
+    "model": "",
+    "revision": ""
+  },
+  "results": [
+    {
+      "name": "Execution policy",
+      "ok": true,
+      "stage": "POLICY",
+      "details": "safe mode: disable QPYcom operations, disable deploy/import checks, and disable QPYcom process kill."
+    },
+    {
+      "name": "Auto port detection",
+      "ok": true,
+      "stage": "PORT_DISCOVERY",
+      "details": "Detected serial ports:\n- COM4: COM4\n- COM5: COM5\n- COM6: COM6\n- COM7: COM7"
+    },
+    {
+      "name": "AT probe",
+      "ok": false,
+      "stage": "AT",
+      "details": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\n\""
+    },
+    {
+      "name": "REPL probe",
+      "ok": false,
+      "stage": "REPL",
+      "details": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\n\""
+    },
+    {
+      "name": "REPL env snapshot",
+      "ok": false,
+      "stage": "REPL",
+      "details": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\n\""
+    },
+    {
+      "name": "QPYcom policy gate",
+      "ok": true,
+      "stage": "POLICY",
+      "details": "QPYcom backend not required in this run."
+    },
+    {
+      "name": "REPL ls /usr",
+      "ok": false,
+      "stage": "REPL",
+      "details": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\n\""
+    }
+  ],
+  "failed_count": 4,
+  "pass_count": 3
+}

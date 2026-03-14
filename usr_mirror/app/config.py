@@ -25,6 +25,24 @@ REMOTE_SIGNER_HTTP_AUTH_TOKEN = ""
 REMOTE_SIGNER_HTTP_TIMEOUT_SEC = 5
 REMOTE_SIGNER_HTTP_HEADERS = {}
 
+# Stock official Gateway does not consume custom heartbeat/telemetry/lifecycle/alert
+# node.event names by default. Keep raw generic node events disabled unless your
+# Gateway extension explicitly handles them.
+OPENCLAW_GENERIC_NODE_EVENTS = False
+
+# Stock-Gateway-compatible proactive uplink path. Default business alerts use
+# node.event(event="agent.request") so the official Gateway can consume them
+# without source changes.
+OPENCLAW_ALERT_UPLINK_MODE = "agent_request"
+OPENCLAW_AGENT_REQUEST_SESSION_KEY = ""
+OPENCLAW_AGENT_REQUEST_DELIVER = False
+OPENCLAW_AGENT_REQUEST_CHANNEL = ""
+OPENCLAW_AGENT_REQUEST_TO = ""
+OPENCLAW_AGENT_REQUEST_RECEIPT = False
+OPENCLAW_AGENT_REQUEST_RECEIPT_TEXT = "Device alert received."
+OPENCLAW_AGENT_REQUEST_THINKING = "low"
+OPENCLAW_AGENT_REQUEST_TIMEOUT_SECONDS = 0
+
 HEARTBEAT_INTERVAL_SEC = 15
 TELEMETRY_INTERVAL_SEC = 60
 RECONNECT_BACKOFF_SEC = 5
@@ -35,6 +53,7 @@ MAX_CMD_EXEC_SEC = 10
 OUTBOX_MAX = 64
 DEDUPE_WINDOW = 64
 MAX_RETRY = 3
+OUTBOX_RETRY_BACKOFF_MS = 1000
 SENSITIVE_MASK = True
 
 OPENCLAW_CAPS = [

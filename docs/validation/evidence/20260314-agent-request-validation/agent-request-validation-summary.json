@@ -1,0 +1,35 @@
+{
+  "capturedAt": "2026-03-14T16:56:14+08:00",
+  "deviceScript": {
+    "path": "/usr/qpy_agent_request_lowlevel_probe.py",
+    "pushOk": true,
+    "runOk": true,
+    "beforeOnline": true,
+    "transport": "ok",
+    "hasEnqueue": true,
+    "enqueueOk": null,
+    "flushCalled": false,
+    "afterOutbox": 0,
+    "afterLastOutboxError": "socket timeout"
+  },
+  "gatewayObservation": {
+    "sessionKeyRequested": "agent:main:qpy-stock-proof-20260314T165136",
+    "matchedSessionKey": "agent:main:qpy-stock-proof-20260314t165136",
+    "sessionStoreSeen": true,
+    "transcriptMarkerHit": true,
+    "transcriptFile": "5f9abe63-1a9a-4ab6-8bb3-2f2e8c0db9db.jsonl",
+    "sessionUpdatedAt": 1773478487560
+  },
+  "runtimeAfter": {
+    "online": true,
+    "lastErrorCode": "OUTBOX_SEND_FAILED",
+    "outboxDepth": 0,
+    "pendingCmds": 0,
+    "resultCacheDepth": 1
+  },
+  "conclusion": {
+    "stockGatewayAgentRequestConsumed": true,
+    "sessionKeyCanonicalizedLowercase": true,
+    "deviceImmediateFlushStillNeedsFix": true
+  }
+}

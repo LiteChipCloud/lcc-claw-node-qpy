@@ -1,0 +1,11 @@
+{
+  "action": "run",
+  "port": "COM6",
+  "baud": 115200,
+  "policy": "NO_COMMERCIAL_VERDICT",
+  "allow_qpycom_risk": false,
+  "path": "/usr/qpy_runtime_capability_probe.py",
+  "exec_path": "usr/qpy_runtime_capability_probe.py",
+  "ok": true,
+  "raw": "<CR><LF>>>> <CR><LF>>>> <CR><LF>>>> import example<CR><LF>>>> example.exec('usr/qpy_runtime_capability_probe.py')<CR><LF>agent_has_emit_business_alert=True<CR><LF>agent_has_queue_agent_request=True<CR><LF>transport_exists=True<CR><LF>transport_has_queue_business_alert=True<CR><LF>transport_has_queue_agent_request=True<CR><LF>transport_has_enqueue_request=True<CR><LF>agent_py_size=4753<CR><LF>transport_py_size=25116<CR><LF>last_error_code=<CR><LF>last_outbox_error=<CR><LF>capability_probe_done<CR><LF>>>> print('run_exec_sent')<CR><LF>run_exec_sent<CR><LF>>>>"
+}

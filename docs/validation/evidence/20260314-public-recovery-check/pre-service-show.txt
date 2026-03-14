@@ -1,0 +1,7 @@
+ExecMainStartTimestamp=Fri 2026-03-13 19:00:49 CST
+ExecMainPID=86354
+ExecMainCode=0
+ExecMainStatus=0
+Id=openclaw-gateway.service
+ActiveState=active
+SubState=running

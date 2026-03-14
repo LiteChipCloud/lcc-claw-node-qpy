@@ -1,0 +1,18 @@
+{
+  "sampleIndex": 29,
+  "startedAt": "2026-03-14T19:54:24+08:00",
+  "finishedAt": "2026-03-14T19:54:34+08:00",
+  "requestedCommands": [
+    "qpy.runtime.status"
+  ],
+  "ok": false,
+  "eventWindowSec": 95.0,
+  "selectedNode": null,
+  "error": {
+    "type": "timeout",
+    "message": "timed out"
+  },
+  "commandResults": [],
+  "eventCount": 0,
+  "events": []
+}

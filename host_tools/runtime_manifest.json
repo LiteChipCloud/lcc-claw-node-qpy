@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "directories": [
+    "/usr",
+    "/usr/app",
+    "/usr/app/tools"
+  ],
+  "entries": [
+    {
+      "local": "_main.py",
+      "remote_dir": "/usr",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/__init__.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/agent.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/command_worker.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/config.py",
+      "remote_dir": "/usr/app",
+      "kind": "config"
+    },
+    {
+      "local": "app/device_auth.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/json_codec.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/runtime_state.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tool_runner.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/transport_ws_openclaw.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/ws_client.py",
+      "remote_dir": "/usr/app",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/__init__.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_cell_info.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_device_info.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_device_status.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_net_diag.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_probe.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_runtime_status.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_sim_info.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    },
+    {
+      "local": "app/tools/tool_tools_catalog.py",
+      "remote_dir": "/usr/app/tools",
+      "kind": "runtime"
+    }
+  ]
+}

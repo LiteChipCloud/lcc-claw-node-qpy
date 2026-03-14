@@ -1,0 +1,109 @@
+{
+  "capturedAt": "2026-03-14T18:16:54+08:00",
+  "startedAt": "2026-03-14T17:55:13+08:00",
+  "checkpointSample": 4,
+  "samples": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0,
+    "consecutiveFailures": 0,
+    "lastSampleFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak-run2/samples/0005-qpy_runtime_status.json",
+    "lastSuccessAt": "2026-03-14T18:16:54+08:00",
+    "lastFailureAt": null
+  },
+  "runtime": {
+    "runs": 4,
+    "durationsMs": [
+      371,
+      369,
+      639,
+      803
+    ],
+    "p95Ms": 803,
+    "lastSummary": {
+      "online": true,
+      "connect_attempts": 1,
+      "connect_successes": 1,
+      "reconnect_count": 0,
+      "consecutive_failures": 0,
+      "last_error_code": "",
+      "last_event": "node.invoke.request",
+      "last_cmd_tool": "qpy.runtime.status",
+      "pending_cmds": 0,
+      "outbox_depth": 0,
+      "result_cache_depth": 14,
+      "device_token_cached": "masked:3cbc87c768",
+      "last_signer": {
+        "logical_device_id": "masked:2d532581bc",
+        "url": "http://124.70.221.88:8787/sign",
+        "signed_at": 1773479921965
+      },
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 2,
+      "tool": "qpy.runtime.status",
+      "requested_tool": "qpy.runtime.status",
+      "error": null
+    }
+  },
+  "device": {
+    "runs": 2,
+    "durationsMs": [
+      16922,
+      17628
+    ],
+    "p95Ms": 17628,
+    "lastSummary": {
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 17018,
+      "runtime": {
+        "online": true,
+        "reconnect_count": 0,
+        "last_error_code": "",
+        "last_outbox_error": "",
+        "outbox_depth": 0
+      }
+    }
+  },
+  "catalog": {
+    "runs": 1,
+    "durationsMs": [
+      506
+    ],
+    "p95Ms": 506
+  },
+  "events": {
+    "totalObserved": 31,
+    "operatorVisibleEvents": [
+      "connect.challenge",
+      "health",
+      "tick"
+    ],
+    "nodeEventVisible": false,
+    "lastObservedAt": "2026-03-14T18:16:54+08:00"
+  },
+  "remoteSignerObserved": true,
+  "reconnectCountSeries": [
+    {
+      "ts": "2026-03-14T17:57:05+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:03:42+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:10:17+08:00",
+      "value": 0
+    },
+    {
+      "ts": "2026-03-14T18:16:54+08:00",
+      "value": 0
+    }
+  ],
+  "attentionFlags": [
+    "node.event frames not directly visible to operator session"
+  ],
+  "status": "running-stable"
+}

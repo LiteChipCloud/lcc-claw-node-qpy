@@ -1,0 +1,5 @@
+﻿{
+  "ok": false,
+  "error": "AT batch failed: ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.",
+  "policy": "NO_COMMERCIAL_VERDICT"
+}

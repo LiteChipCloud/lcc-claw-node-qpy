@@ -4,6 +4,21 @@
 > 适用范围：`lcc-claw-node-qpy OSS`  
 > 设计目标：在不改造 OpenClaw Gateway 源码前提下，实现设备与 Gateway 的稳定双向通信。
 
+## 0.1 2026-03-14 官方 Gateway 事件消费面对齐结论
+
+这轮源码取证已经确认一个关键边界：
+
+1. 官方 OpenClaw Gateway 当前**不会默认消费**自定义 `heartbeat / telemetry / lifecycle / alert` 这类原始事件名。
+2. 官方 Gateway 当前有明确消费者的 `node.event` 类型主要是：
+   - `agent.request`
+   - `voice.transcript`
+   - `notifications.changed`
+   - `chat.subscribe`
+   - `chat.unsubscribe`
+   - `exec.started / exec.finished / exec.denied`
+   - `push.apns.register`
+3. 因此，OSS 开源版如果坚持“零改官方 Gateway”，设备主动业务上报的默认路径应是 `agent.request`，而不是假设 Gateway 会直接显示自定义 `alert`。
+
 ## 0. 2026-03-12 真机联调结论
 
 | 事项 | 结论 | 备注 |
@@ -22,8 +37,9 @@
 
 1. 下行链路：Gateway -> 设备命令下发（`node.invoke.request`）。
 2. 上行链路：设备 -> Gateway 执行回执（`node.invoke.result`）。
-3. 上行链路：设备 -> Gateway 主动事件（`node.event`，含 heartbeat/telemetry/alert）。
-4. 连接链路：断线重连、幂等防重、结果可追溯。
+3. 上行链路：设备 -> Gateway 主动业务请求（`node.event(event=\"agent.request\")`）。
+4. 扩展链路：设备 -> Gateway 原始 `node.event`（`heartbeat/telemetry/lifecycle/alert`，仅面向自定义 Gateway 扩展）。
+5. 连接链路：断线重连、幂等防重、结果可追溯。
 
 本文只覆盖设备侧设计与协议契约，不包含 Gateway 代码改造。
 
@@ -41,7 +57,8 @@
 | 连接 | 仅 TCP 可达性预检 | 已完成官方 Gateway challenge/connect 流程 |
 | 下行接收 | `recv_cmd()` 返回 `None` | 已接收并处理 `node.invoke.request` |
 | 上行回执 | `send_result()` 占位 | 已回传 `node.invoke.result` |
-| 上行事件 | `send_event()` 占位 | 已支持 heartbeat/telemetry/lifecycle |
+| stock 主动上行 | `send_event()` 占位 | 已补 `agent.request` 兼容 helper |
+| 原始上行事件 | `send_event()` 占位 | 已支持 heartbeat/telemetry/lifecycle/alert，但默认不假设官方 Gateway 消费 |
 | 工具能力 | `tool_device_info/tool_net_diag` | 已扩展到 7 个只读工具 |
 | 幂等与重放保护 | 未实现 | 已具备基础 outbox/result cache/去重窗口 |
 
@@ -85,6 +102,7 @@ flowchart TD
 2. 下发：`event=node.invoke.request`。
 3. 回执：`req method=node.invoke.result`。
 4. 主动上报：`req method=node.event`。
+5. 但 `node.event` 只是节点到 Gateway 的入口方法，具体事件是否被消费，取决于 Gateway 是否有对应处理器。
 
 ## 5.2 建链与鉴权时序
 
@@ -112,6 +130,7 @@ sequenceDiagram
 2. 若 Gateway 强制设备身份签名，设备侧采用外置 signer（`remote_signer`）路径，不改 Gateway 协议。
 3. 官方 Gateway 对 node client 的 `client.id` 有枚举限制；QuecPython 设备侧应对齐为 `node-host`。
 4. 设备侧默认不发送浏览器 `Origin` 头，否则官方 Gateway 会按 Control UI 安全策略做来源校验。
+5. 如果目标是“零改官方 Gateway 下的主动业务上报”，优先使用 `agent.request`，不要把自定义 `alert` 当成官方通路。
 
 ## 5.3 下行命令闭环时序
 
@@ -131,7 +150,16 @@ sequenceDiagram
 
 ## 5.4 主动上行事件
 
-事件类型定义（最小集）：
+主动上行路径需要分成两层：
+
+### A. 官方 Gateway 兼容层
+
+1. `agent.request`：设备把文本/结构化说明送入 Gateway agent；适合主动告警、人工介入请求、业务事件说明。
+2. `notifications.changed`：设备把通知变化写入 Gateway 的 system event 队列。
+
+### B. 自定义 Gateway 扩展层
+
+事件类型定义（扩展最小集）：
 
 1. `heartbeat`：在线证明与基础健康。
 2. `telemetry`：设备状态快照（可节流）。
@@ -155,6 +183,11 @@ sequenceDiagram
   "idempotency_key": "evt_20260312_0001"
 }
 ```
+
+补充说明：
+
+1. 上述 envelope 适用于“你自己也维护 Gateway 消费器”的场景。
+2. 如果目标是直接兼容官方 Gateway，`alert` 不应作为默认通路，而应转换成 `agent.request` 文本/结构化说明。
 
 ## 6. 命令与工具模型
 

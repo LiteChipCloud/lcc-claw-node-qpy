@@ -1,0 +1,92 @@
+{
+  "mode": "recovery-check",
+  "startedAt": "2026-03-13T19:05:38+08:00",
+  "finishedAt": "2026-03-13T19:06:08+08:00",
+  "elapsedMs": 30033,
+  "targetMs": 30000,
+  "targetMet": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "ts": "2026-03-13T19:05:38+08:00",
+      "ok": false,
+      "error": {
+        "type": "WsError",
+        "message": "no node matched the requested filters"
+      },
+      "selectedNode": null,
+      "commandResults": [],
+      "eventCount": 0,
+      "events": []
+    },
+    {
+      "attempt": 2,
+      "ts": "2026-03-13T19:05:43+08:00",
+      "ok": false,
+      "error": {
+        "type": "WsError",
+        "message": "no node matched the requested filters"
+      },
+      "selectedNode": null,
+      "commandResults": [],
+      "eventCount": 0,
+      "events": []
+    },
+    {
+      "attempt": 3,
+      "ts": "2026-03-13T19:05:48+08:00",
+      "ok": false,
+      "error": {
+        "type": "WsError",
+        "message": "no node matched the requested filters"
+      },
+      "selectedNode": null,
+      "commandResults": [],
+      "eventCount": 0,
+      "events": []
+    },
+    {
+      "attempt": 4,
+      "ts": "2026-03-13T19:05:53+08:00",
+      "ok": false,
+      "error": {
+        "type": "WsError",
+        "message": "no node matched the requested filters"
+      },
+      "selectedNode": null,
+      "commandResults": [],
+      "eventCount": 0,
+      "events": []
+    },
+    {
+      "attempt": 5,
+      "ts": "2026-03-13T19:05:58+08:00",
+      "ok": false,
+      "error": {
+        "type": "WsError",
+        "message": "no node matched the requested filters"
+      },
+      "selectedNode": null,
+      "commandResults": [],
+      "eventCount": 0,
+      "events": []
+    },
+    {
+      "attempt": 6,
+      "ts": "2026-03-13T19:06:03+08:00",
+      "ok": false,
+      "error": {
+        "type": "WsError",
+        "message": "no node matched the requested filters"
+      },
+      "selectedNode": null,
+      "commandResults": [],
+      "eventCount": 0,
+      "events": []
+    }
+  ],
+  "error": {
+    "type": "RecoveryTimeout",
+    "message": "no successful qpy.runtime.status within 30.0s"
+  }
+}

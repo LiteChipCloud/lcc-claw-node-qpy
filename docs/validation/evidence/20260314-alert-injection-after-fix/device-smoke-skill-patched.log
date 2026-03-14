@@ -1,0 +1,27 @@
+QuecPython device smoke results
+Generated: 2026-03-14T14:02:21
+
+[PASS] Execution policy (POLICY)
+safe mode: disable QPYcom operations, disable deploy/import checks, and disable QPYcom process kill.
+
+[FAIL] AT probe (AT)
+=== AT ===
+<empty>
+=== ATI ===
+<empty>
+=== AT+CSQ ===
+<empty>
+
+[FAIL] REPL probe (REPL)
+ERR: Exception calling "Write" with "1" argument(s): "The port is closed."
+
+[FAIL] REPL env snapshot (REPL)
+ERR: Exception calling "Open" with "0" argument(s): "Access to the port is denied."
+
+[PASS] QPYcom policy gate (POLICY)
+QPYcom backend not required in this run.
+
+[FAIL] REPL ls /usr (REPL)
+ERR: Exception calling "Open" with "0" argument(s): "Access to the port is denied."
+
+Summary: 2 passed, 4 failed

@@ -1,0 +1,522 @@
+{
+  "samples": {
+    "total": 26,
+    "successful": 25,
+    "failed": 1,
+    "consecutiveFailures": 0,
+    "lastSampleFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase4-short-soak/samples/0026-qpy_device_status.json",
+    "lastSuccessAt": "2026-03-14T04:43:27+08:00",
+    "lastFailureAt": "2026-03-14T04:30:12+08:00"
+  },
+  "commands": {
+    "qpy.runtime.status": {
+      "runs": 13,
+      "successful": 13,
+      "failed": 0,
+      "thresholdMs": 5000,
+      "thresholdBreaches": 0,
+      "durationsMs": [
+        471,
+        316,
+        472,
+        486,
+        229,
+        504,
+        495,
+        477,
+        482,
+        316,
+        582,
+        492,
+        499
+      ],
+      "durationStats": {
+        "count": 13,
+        "min": 229,
+        "max": 582,
+        "avg": 448,
+        "p50": 482,
+        "p95": 504
+      },
+      "lastSuccessAt": "2026-03-14T04:43:08+08:00",
+      "lastFailureAt": null,
+      "lastSummary": {
+        "online": true,
+        "connect_attempts": 3,
+        "connect_successes": 2,
+        "reconnect_count": 1,
+        "consecutive_failures": 0,
+        "last_error_code": "CONNECT_FAILED",
+        "last_event": "node.invoke.request",
+        "last_cmd_tool": "qpy.runtime.status",
+        "pending_cmds": 0,
+        "outbox_depth": 0,
+        "result_cache_depth": 50,
+        "device_token_cached": "masked:3cbc87c768",
+        "last_signer": {
+          "logical_device_id": "masked:2d532581bc",
+          "url": "http://124.70.221.88:8787/sign",
+          "signed_at": 1773431978218
+        },
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 2,
+        "tool": "qpy.runtime.status",
+        "requested_tool": "qpy.runtime.status",
+        "error": null
+      },
+      "lastError": null
+    },
+    "qpy.device.status": {
+      "runs": 9,
+      "successful": 9,
+      "failed": 0,
+      "thresholdMs": 30000,
+      "thresholdBreaches": 0,
+      "durationsMs": [
+        17314,
+        17816,
+        17711,
+        18331,
+        19245,
+        18739,
+        16262,
+        16027,
+        16742
+      ],
+      "durationStats": {
+        "count": 9,
+        "min": 16027,
+        "max": 19245,
+        "avg": 17576,
+        "p50": 17711,
+        "p95": 19245
+      },
+      "lastSuccessAt": "2026-03-14T04:43:27+08:00",
+      "lastFailureAt": null,
+      "lastSummary": {
+        "top_level_keys": [
+          "cell",
+          "data_context",
+          "device_id",
+          "firmware_version",
+          "imei",
+          "modem",
+          "module_model",
+          "network",
+          "node_id",
+          "operator",
+          "recommendations",
+          "registration",
+          "runtime",
+          "signal",
+          "sim",
+          "sim_inserted",
+          "sim_ready",
+          "ts"
+        ],
+        "registration": {
+          "cgreg": {
+            "stat": 1,
+            "n": 0
+          },
+          "registered": true,
+          "cereg": {
+            "stat": 1,
+            "n": 3
+          },
+          "creg": {
+            "stat": 0,
+            "n": 0
+          },
+          "source": "net.getState",
+          "stat": 1
+        },
+        "data_context": {
+          "available": true,
+          "contexts": [
+            {
+              "state": 1,
+              "reconnect": 0,
+              "dns_primary": "222.66.251.8",
+              "ip_type": "IP",
+              "ip_address": "10.86.54.2",
+              "dns_secondary": "116.236.159.8"
+            },
+            {
+              "state": 1,
+              "reconnect": 0,
+              "dns_primary": "240e:58:c000:1700:222:66:251:8",
+              "ip_type": "IPV6",
+              "ip_address": "240e:46d:9f00:13bc:189c:6b90:488e:25f8",
+              "dns_secondary": "240e:58:c000:1300:116:236:159:8"
+            }
+          ],
+          "ip_type_code": 2,
+          "cid": 1,
+          "ip_type": "IP",
+          "profile_id": 1,
+          "state": 1,
+          "source": "dataCall.getInfo",
+          "cid_preferred": 1,
+          "ip_address": "10.86.54.2",
+          "raw": [
+            1,
+            2,
+            [
+              1,
+              0,
+              "10.86.54.2",
+              "222.66.251.8",
+              "116.236.159.8"
+            ],
+            [
+              1,
+              0,
+              "240e:46d:9f00:13bc:189c:6b90:488e:25f8",
+              "240e:58:c000:1700:222:66:251:8",
+              "240e:58:c000:1300:116:236:159:8"
+            ]
+          ]
+        },
+        "runtime": {
+          "last_close_ms": 21221933,
+          "last_exec_status": "succeeded",
+          "inflight_cmd_tool": "qpy.device.status",
+          "result_cache_depth": 51,
+          "protocol": 3,
+          "last_signer": {
+            "logical_device_id": "masked:2d532581bc",
+            "url": "http://124.70.221.88:8787/sign",
+            "signed_at": 1773431978218
+          },
+          "last_tick_ms": 23823513,
+          "last_disconnect_ms": 21221933,
+          "tool_exec_started_ms": 23818022,
+          "device_token_cached": "masked:3cbc87c768",
+          "last_cmd_id": "07b30db3-b7ce-4b61-81a3-ae62d30af473",
+          "sent_frames": 1885,
+          "last_outbox_error": "",
+          "last_event": "health",
+          "last_exec_result_code": "OK",
+          "last_cmd_ms": 23818026,
+          "received_frames": 3182,
+          "last_outbox_error_ms": 0,
+          "connect_successes": 2,
+          "boot_ms": 78626,
+          "worker_busy": true,
+          "last_event_ms": 23818359,
+          "logical_device_id": "masked:2d532581bc",
+          "node_id": "masked:354a779c25",
+          "last_error": "[Errno 104] ECONNRESET",
+          "tool_exec_finished_ms": 0,
+          "worker_available": true,
+          "last_error_ms": 21216970,
+          "last_ack_ms": 23814947,
+          "pending_cmds": 0,
+          "inflight_cmd_id": "07b30db3-b7ce-4b61-81a3-ae62d30af473",
+          "last_close_reason": "reconnect",
+          "reconnect_count": 1,
+          "last_connect_ms": 21222673,
+          "last_error_code": "CONNECT_FAILED",
+          "last_cmd_tool": "qpy.device.status",
+          "consecutive_failures": 0,
+          "gateway": {
+            "device_auth_mode": "remote_signer_http",
+            "role": "node",
+            "url": "ws://124.70.221.88:18789",
+            "heartbeat_interval_sec": 15,
+            "telemetry_interval_sec": 90
+          },
+          "online": true,
+          "safe_mode": false,
+          "outbox_depth": 0,
+          "boot_wall_ms": 79000,
+          "connect_attempts": 3
+        },
+        "network": {
+          "available": true,
+          "registered": true,
+          "nitz_time": {
+            "source": "nitzTime",
+            "raw": [
+              "26/03/13 14:03:40 8 0",
+              1773410620,
+              0
+            ]
+          },
+          "data_registration": {
+            "state": 1,
+            "lac": 23923,
+            "reject_cause": 0,
+            "cid": 187461563,
+            "rat": 7,
+            "psc": 0
+          },
+          "registration": {
+            "cgreg": {
+              "stat": 1,
+              "n": 0
+            },
+            "registered": true,
+            "cereg": {
+              "stat": 1,
+              "n": 3
+            },
+            "creg": {
+              "stat": 0,
+              "n": 0
+            },
+            "source": "net.getState",
+            "stat": 1
+          },
+          "operator": {
+            "source": "operatorName",
+            "mcc": "460",
+            "short_name": "CT",
+            "long_name": "CHN-CT",
+            "mnc": "11"
+          },
+          "registration_source": "getState",
+          "registration_raw": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              23923,
+              187461563,
+              7,
+              0,
+              0
+            ]
+          ],
+          "signal": {
+            "serving_mnc": 17,
+            "quality": "good",
+            "serving_ci": 187461563,
+            "detail_source": "getSignal",
+            "csq": 22,
+            "serving_mcc": 1120,
+            "serving_lac": 23923,
+            "detail": [
+              [
+                99,
+                99,
+                255,
+                255
+              ],
+              [
+                -69,
+                -97,
+                -8,
+                255,
+                5
+              ]
+            ]
+          },
+          "voice_registration": {
+            "state": 0,
+            "lac": 0,
+            "reject_cause": 0,
+            "cid": 0,
+            "rat": 0,
+            "psc": 0
+          },
+          "cell_scan": {
+            "source": "getCellInfo",
+            "raw": [
+              [],
+              [],
+              [
+                [
+                  0,
+                  187461563,
+                  1120,
+                  17,
+                  100,
+                  23923,
+                  1750,
+                  -96,
+                  -18
+                ],
+                [
+                  2,
+                  96608054,
+                  1120,
+                  17,
+                  164,
+                  23923,
+                  1750,
+                  -107,
+                  -24
+                ]
+              ]
+            ]
+          },
+          "network_ready": {
+            "state": 1,
+            "stage": 3
+          }
+        },
+        "sim": {
+          "available": true,
+          "inserted": true,
+          "iccid": "masked:1864fd62e4",
+          "imsi": "masked:7b7635ae96",
+          "ready": true,
+          "status": 1
+        },
+        "cell": {
+          "available": true,
+          "serving": {
+            "ci": 187461563,
+            "mcc": 1120,
+            "mnc": 17,
+            "lac": 23923
+          },
+          "raw_source": "getCellInfo",
+          "raw": [
+            [],
+            [],
+            [
+              [
+                0,
+                187461563,
+                1120,
+                17,
+                100,
+                23923,
+                1750,
+                -95,
+                -18
+              ],
+              [
+                3,
+                9384461,
+                1120,
+                1,
+                132,
+                23923,
+                1552,
+                -120,
+                -30
+              ],
+              [
+                2,
+                96608054,
+                1120,
+                17,
+                164,
+                23923,
+                1750,
+                -106,
+                -23
+              ]
+            ]
+          ],
+          "neighbors": {
+            "ci": [
+              187461563
+            ],
+            "mcc": [
+              1120,
+              1120,
+              1120
+            ],
+            "mnc": [
+              17,
+              1,
+              17
+            ],
+            "lac": [
+              23923
+            ]
+          }
+        },
+        "signal": {
+          "serving_mnc": 17,
+          "quality": "good",
+          "serving_ci": 187461563,
+          "detail_source": "getSignal",
+          "csq": 22,
+          "serving_mcc": 1120,
+          "serving_lac": 23923,
+          "detail": [
+            [
+              99,
+              99,
+              255,
+              255
+            ],
+            [
+              -69,
+              -97,
+              -8,
+              255,
+              5
+            ]
+          ]
+        },
+        "operator": {
+          "source": "operatorName",
+          "mcc": "460",
+          "short_name": "CT",
+          "long_name": "CHN-CT",
+          "mnc": "11"
+        },
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 16410,
+        "tool": "qpy.device.status",
+        "requested_tool": "qpy.device.status",
+        "error": null
+      },
+      "lastError": null
+    },
+    "qpy.tools.catalog": {
+      "runs": 5,
+      "successful": 5,
+      "failed": 0,
+      "thresholdMs": 5000,
+      "thresholdBreaches": 0,
+      "durationsMs": [
+        487,
+        469,
+        491,
+        467,
+        496
+      ],
+      "durationStats": {
+        "count": 5,
+        "min": 467,
+        "max": 496,
+        "avg": 482,
+        "p50": 487,
+        "p95": 496
+      },
+      "lastSuccessAt": "2026-03-14T04:41:08+08:00",
+      "lastFailureAt": null,
+      "lastSummary": {
+        "tool_count": 7,
+        "tools": [],
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 2,
+        "tool": "qpy.tools.catalog",
+        "requested_tool": "qpy.tools.catalog",
+        "error": null
+      },
+      "lastError": null
+    }
+  },
+  "attentionFlags": [
+    "node.event frames not directly visible to operator session"
+  ],
+  "selectedNode": null
+}

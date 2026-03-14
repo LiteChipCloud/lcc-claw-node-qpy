@@ -1,0 +1,28 @@
+{
+  "capturedAt": "2026-03-14T17:57:05+08:00",
+  "startedAt": "2026-03-14T17:55:13+08:00",
+  "controllerSessionId": 24424,
+  "processPid": 46733,
+  "status": "running",
+  "sample1Ok": true,
+  "sample1File": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak-run2/samples/0001-qpy_runtime_status+qpy_device_status+qpy_tools_catalog.json",
+  "samplesTotal": 1,
+  "samplesSuccessful": 1,
+  "samplesFailed": 0,
+  "runtimeMs": [
+    371
+  ],
+  "deviceMs": [
+    16922
+  ],
+  "catalogMs": [
+    506
+  ],
+  "nodeEventVisible": false,
+  "operatorVisibleEvents": [
+    "connect.challenge",
+    "health",
+    "tick"
+  ],
+  "remoteSignerObserved": true
+}

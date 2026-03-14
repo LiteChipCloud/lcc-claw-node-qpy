@@ -37,6 +37,14 @@ def wall_time_ms():
         return 0
 
 
+def measure_step(step_name, timings, func, *args):
+    started = utime.ticks_ms()
+    result = func(*args)
+    if isinstance(timings, dict):
+        timings[step_name] = utime.ticks_diff(utime.ticks_ms(), started)
+    return result
+
+
 def safe_attr_call(module, names, *args):
     if not module:
         return None, ""
@@ -350,6 +358,16 @@ def gather_runtime_info(cfg, state):
     return runtime
 
 
+def build_runtime_telemetry(cfg, state):
+    runtime = gather_runtime_info(cfg, state)
+    return {
+        "device_id": cfg.DEVICE_ID,
+        "node_id": state.node_id,
+        "runtime": runtime,
+        "ts": wall_time_ms(),
+    }
+
+
 def build_recommendations(sim_info, network_info, data_context):
     tips = []
     status = sim_info.get("status")
@@ -366,12 +384,23 @@ def build_recommendations(sim_info, network_info, data_context):
 
 
 def build_device_status(cfg, state, mask_sensitive):
-    modem_info = gather_modem_info(cfg, mask_sensitive)
-    sim_info = gather_sim_info(mask_sensitive)
-    network_info = gather_network_info()
-    data_context = gather_data_context()
-    runtime = gather_runtime_info(cfg, state)
-    cell = gather_cell_info()
+    timings = {}
+    started = utime.ticks_ms()
+    modem_info = measure_step("gather_modem_info", timings, gather_modem_info, cfg, mask_sensitive)
+    sim_info = measure_step("gather_sim_info", timings, gather_sim_info, mask_sensitive)
+    network_info = measure_step("gather_network_info", timings, gather_network_info)
+    data_context = measure_step("gather_data_context", timings, gather_data_context)
+    runtime = measure_step("gather_runtime_info", timings, gather_runtime_info, cfg, state)
+    cell = measure_step("gather_cell_info", timings, gather_cell_info)
+    recommendations = measure_step(
+        "build_recommendations",
+        timings,
+        build_recommendations,
+        sim_info,
+        network_info,
+        data_context,
+    )
+    total_ms = utime.ticks_diff(utime.ticks_ms(), started)
     return {
         "device_id": cfg.DEVICE_ID,
         "node_id": state.node_id,
@@ -389,7 +418,9 @@ def build_device_status(cfg, state, mask_sensitive):
         "sim": sim_info,
         "network": network_info,
         "cell": cell,
-        "recommendations": build_recommendations(sim_info, network_info, data_context),
+        "recommendations": recommendations,
+        "probe_timings_ms": timings,
+        "probe_duration_ms": total_ms,
         "ts": wall_time_ms(),
     }
 

@@ -1,0 +1,13 @@
+{
+  "captured_from": "/home/openclaw/.openclaw/openclaw.json",
+  "gateway.auth.token": {
+    "present": true,
+    "len": 21,
+    "sha256_12": "705e109633bf"
+  },
+  "gateway.remote.token": {
+    "present": false,
+    "len": 0,
+    "sha256_12": null
+  }
+}

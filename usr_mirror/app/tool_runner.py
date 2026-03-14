@@ -110,6 +110,13 @@ class ToolRunner(object):
         self.state.note_command(request_id, entry["name"])
         try:
             data = entry["impl"].execute(args)
+            duration_ms = utime.ticks_diff(utime.ticks_ms(), started)
+            probe_timings = {}
+            if isinstance(data, dict):
+                timings = data.get("probe_timings_ms")
+                if isinstance(timings, dict):
+                    probe_timings = timings
+            self.state.note_probe_metrics(entry["name"], duration_ms, probe_timings)
             return {
                 "cmd_id": request_id,
                 "requested_tool": tool,
@@ -118,7 +125,7 @@ class ToolRunner(object):
                 "result_code": "OK",
                 "data": data,
                 "error": None,
-                "duration_ms": utime.ticks_diff(utime.ticks_ms(), started),
+                "duration_ms": duration_ms,
             }
         except Exception as e:
             return self._error(request_id, tool, entry["name"], "EXEC_RUNTIME_ERROR", str(e), started)

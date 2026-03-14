@@ -1,0 +1,90 @@
+{
+  "restartRequestedAtMs": 1773431967522,
+  "recoveryLaunchedAtMs": 1773431968776,
+  "launchGapMs": 1254,
+  "service": {
+    "pre": {
+      "activeState": "active",
+      "subState": "running",
+      "execMainPID": "86354",
+      "execMainStartTimestamp": "Fri 2026-03-13 19:00:49 CST",
+      "process": {
+        "raw": "86354    1119 openclaw Fri Mar 13 19:00:48 2026    08:58:37 openclaw-gateway",
+        "pid": 86354
+      }
+    },
+    "post": {
+      "activeState": "active",
+      "subState": "running",
+      "execMainPID": "114535",
+      "execMainStartTimestamp": "Sat 2026-03-14 03:59:27 CST",
+      "process": {
+        "raw": "114535    1119 openclaw Sat Mar 14 03:59:27 2026       00:39 openclaw-gateway",
+        "pid": 114535
+      }
+    },
+    "pidChanged": true
+  },
+  "recoveryCheck": {
+    "elapsedMs": 10338,
+    "targetMs": 30000,
+    "targetMet": true,
+    "approxElapsedFromRestartRequestMs": 11592,
+    "approxTargetMetFromRestartRequest": true,
+    "attemptCount": 3,
+    "lastAttemptOk": true,
+    "error": null
+  },
+  "postRecoveryBurnin": {
+    "selectedNode": {
+      "nodeId": "masked:354a779c25",
+      "displayName": "QuecPython Windows Lab Node",
+      "platform": "quectel",
+      "version": "v1.0.0-test",
+      "deviceFamily": "quecpython",
+      "caps": [
+        "diagnostics",
+        "network",
+        "telemetry"
+      ],
+      "commands": [
+        "qpy.cell.info",
+        "qpy.device.info",
+        "qpy.device.status",
+        "qpy.net.diag",
+        "qpy.runtime.status",
+        "qpy.sim.info",
+        "qpy.tools.catalog",
+        "tool_device_info",
+        "tool_net_diag"
+      ],
+      "paired": true,
+      "connected": true,
+      "connectedAtMs": 1773431978389,
+      "remoteIp": "masked:d43dbe8549"
+    },
+    "commands": [
+      {
+        "command": "qpy.runtime.status",
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 2,
+        "error": null
+      },
+      {
+        "command": "qpy.device.status",
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 17098,
+        "error": null
+      },
+      {
+        "command": "qpy.tools.catalog",
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 1,
+        "error": null
+      }
+    ]
+  }
+}

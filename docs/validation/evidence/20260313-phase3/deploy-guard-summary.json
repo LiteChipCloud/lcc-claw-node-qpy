@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-03-13T23:40:00+08:00",
+  "windowsDeployScript": {
+    "path": "D:/litechiptech/embedded/projects/lcc-qpy-staging/lcc-qpy-windows-bundle/deploy_to_device.ps1",
+    "backupPath": "D:/litechiptech/embedded/projects/lcc-qpy-staging/lcc-qpy-windows-bundle/deploy_to_device.20260313-guarded.bak.ps1",
+    "guardEnabled": true,
+    "configSkipWarningObserved": true,
+    "warningText": "Skip placeholder /usr/app/config.py in auto mode. Set QPY_CONFIG_FILE=<path> or QPY_PUSH_CONFIG=always to override."
+  },
+  "deviceConfigProtection": {
+    "path": "/usr/app/config.py",
+    "sizeBefore": 1547,
+    "sizeAfter": 1547,
+    "preserved": true
+  },
+  "deviceResidualTmpFiles": [
+    {
+      "path": "/usr/app/command_worker.py.tmp",
+      "size": 2304
+    },
+    {
+      "path": "/usr/app/runtime_state.py.tmp",
+      "size": 6144
+    },
+    {
+      "path": "/usr/app/transport_ws_openclaw.py.tmp",
+      "size": 7680
+    },
+    {
+      "path": "/usr/app/tools/tool_probe.py.tmp",
+      "size": 768
+    }
+  ],
+  "runtimeAfterDeploy": {
+    "online": true,
+    "protocol": 3,
+    "connectSuccesses": 1,
+    "lastCmdTool": "qpy.tools.catalog"
+  },
+  "findings": [
+    "placeholder config overwrite is now blocked in auto mode",
+    "bulk REPL push is still flaky for larger files and leaves .tmp residue",
+    "the script is safe enough for config protection, but not yet a robust full-bundle deploy mechanism"
+  ]
+}

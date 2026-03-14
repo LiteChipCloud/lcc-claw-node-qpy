@@ -1,8 +1,12 @@
 import utime
+try:
+    import _thread
+except Exception:
+    _thread = None
 
 from app.device_auth import resolve_connect_security
 from app.json_codec import dumps, loads
-from app.tools.tool_probe import build_device_status, wall_time_ms
+from app.tools.tool_probe import build_runtime_telemetry, wall_time_ms
 from app.ws_client import WsClient, WsClosed, WsError, WsTimeout
 
 
@@ -20,6 +24,7 @@ class WsNativeTransport(object):
         self._outbox = []
         self._result_cache = {}
         self._result_cache_keys = []
+        self._queue_lock = _thread.allocate_lock() if bool(_thread) and hasattr(_thread, "allocate_lock") else None
         self._update_depths()
 
     def connect(self):
@@ -55,14 +60,14 @@ class WsNativeTransport(object):
             self.online = True
             self.state.note_connect(node_id, protocol, payload)
             self._last_hb_ms = 0
-            self._last_telemetry_ms = 0
-            self._queue_event("lifecycle", {
-                "phase": "online",
-                "device_auth_mode": device_auth_mode,
-                "protocol": protocol,
-            }, "info")
-            self._queue_event("telemetry", build_device_status(self.cfg, self.state, bool(getattr(self.cfg, "SENSITIVE_MASK", True))), "info")
-            self.flush_outbox(2)
+            self._last_telemetry_ms = utime.ticks_ms()
+            if self._generic_node_events_enabled():
+                self._queue_event("lifecycle", {
+                    "phase": "online",
+                    "device_auth_mode": device_auth_mode,
+                    "protocol": protocol,
+                }, "info")
+                self.flush_outbox(1)
             return True
         except Exception as e:
             self.state.note_connect_failure("CONNECT_FAILED", str(e))
@@ -70,8 +75,9 @@ class WsNativeTransport(object):
             return False
 
     def close(self, reason="close"):
-        if self.online:
+        if self.online and self._generic_node_events_enabled():
             self._queue_event("lifecycle", {"phase": "offline", "reason": reason}, "warning")
+        self.state.note_close(reason)
         self.online = False
         if self.ws is not None:
             try:
@@ -83,21 +89,24 @@ class WsNativeTransport(object):
         self._update_depths()
 
     def tick(self):
+        self.state.note_tick()
         now = utime.ticks_ms()
         hb_ms = int(getattr(self.cfg, "HEARTBEAT_INTERVAL_SEC", 15) * 1000)
         tel_ms = int(getattr(self.cfg, "TELEMETRY_INTERVAL_SEC", 60) * 1000)
-        if utime.ticks_diff(now, self._last_hb_ms) >= hb_ms:
-            self._last_hb_ms = now
-            self._queue_event("heartbeat", self._heartbeat_payload(), "info")
-        if tel_ms > 0 and utime.ticks_diff(now, self._last_telemetry_ms) >= tel_ms:
-            self._last_telemetry_ms = now
-            self._queue_event("telemetry", build_device_status(self.cfg, self.state, bool(getattr(self.cfg, "SENSITIVE_MASK", True))), "info")
+        if self._generic_node_events_enabled():
+            if utime.ticks_diff(now, self._last_hb_ms) >= hb_ms:
+                self._last_hb_ms = now
+                self._queue_event("heartbeat", self._heartbeat_payload(), "info")
+            if tel_ms > 0 and utime.ticks_diff(now, self._last_telemetry_ms) >= tel_ms:
+                self._last_telemetry_ms = now
+                self._queue_event("telemetry", build_runtime_telemetry(self.cfg, self.state), "info")
         self.flush_outbox(1)
 
-    def recv_cmd(self, timeout_ms):
-        if self._pending_cmds:
-            self._update_depths()
-            return self._pending_cmds.pop(0)
+    def recv_cmd(self, timeout_ms, can_consume=True):
+        if can_consume:
+            cmd = self._pop_pending_cmd()
+            if cmd:
+                return cmd
         if not self.online or self.ws is None:
             return None
 
@@ -110,12 +119,11 @@ class WsNativeTransport(object):
                 return None
             if frame is None:
                 return None
-            cmd = self._handle_incoming_frame(frame)
-            if cmd:
-                return cmd
-            if self._pending_cmds:
-                self._update_depths()
-                return self._pending_cmds.pop(0)
+            self._handle_incoming_frame(frame)
+            if can_consume:
+                cmd = self._pop_pending_cmd()
+                if cmd:
+                    return cmd
         return None
 
     def send_result(self, cmd, result_payload):
@@ -132,8 +140,10 @@ class WsNativeTransport(object):
             return False
         sent_any = False
         processed = 0
-        while self._outbox and processed < limit:
-            item = self._outbox[0]
+        while processed < limit:
+            item = self._claim_outbox_item()
+            if item is None:
+                break
             try:
                 response = self._request(item["method"], item["params"], int(getattr(self.cfg, "ACK_TIMEOUT_MS", 5000)))
                 if not response.get("ok"):
@@ -141,25 +151,25 @@ class WsNativeTransport(object):
                     code = error.get("code") if isinstance(error, dict) else "ACK_FAILED"
                     message = error.get("message") if isinstance(error, dict) else str(error)
                     raise Exception("%s:%s" % (code or "ACK_FAILED", message or "ack failed"))
-                self._outbox.pop(0)
+                self._finish_outbox_success(item)
                 self.state.note_ack()
                 processed += 1
                 sent_any = True
-                self._update_depths()
             except Exception as e:
-                item["attempts"] += 1
                 self.state.note_error("OUTBOX_SEND_FAILED", str(e))
-                if item["attempts"] > int(getattr(self.cfg, "MAX_RETRY", 3)):
-                    self._outbox.pop(0)
+                self.state.note_outbox_error(str(e))
+                if self._finish_outbox_failure(item):
                     processed += 1
-                    self._update_depths()
                     continue
-                self.close("outbox-failed")
+                if self._is_fatal_outbox_error(e):
+                    self.close("outbox-failed")
                 break
         return sent_any
 
     def queue_boot_event(self):
-        self._queue_event("lifecycle", {
+        if not self._generic_node_events_enabled():
+            return False
+        return self._queue_event("lifecycle", {
             "phase": "boot",
             "firmware": getattr(self.cfg, "FW_VERSION", ""),
             "device_name": getattr(self.cfg, "DEVICE_NAME", ""),
@@ -245,7 +255,7 @@ class WsNativeTransport(object):
             event_name = frame.get("event")
             self.state.note_event(event_name)
             if event_name == "node.invoke.request":
-                return self._consume_invoke_request(frame.get("payload") or {})
+                self._consume_invoke_request(frame.get("payload") or {})
             return None
         return None
 
@@ -270,11 +280,11 @@ class WsNativeTransport(object):
                 }, True)
                 return None
         dedupe_key = payload.get("idempotencyKey") or request_id
-        if dedupe_key and dedupe_key in self._result_cache:
-            cached = self._result_cache.get(dedupe_key)
+        if dedupe_key:
+            cached = self._get_cached_result(dedupe_key)
             if cached:
                 self._enqueue_request("node.invoke.result", cached, True)
-            return None
+                return None
         cmd = {
             "request_id": request_id,
             "node_id": node_id,
@@ -284,9 +294,13 @@ class WsNativeTransport(object):
             "idempotency_key": payload.get("idempotencyKey"),
             "dedupe_key": dedupe_key,
         }
-        self._pending_cmds.append(cmd)
-        self._update_depths()
-        return self._pending_cmds.pop(0)
+        self._acquire_queue()
+        try:
+            self._pending_cmds.append(cmd)
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+        return None
 
     def _build_result_params(self, cmd, result_payload):
         params = {
@@ -319,6 +333,145 @@ class WsNativeTransport(object):
             },
         }
 
+    def _generic_node_events_enabled(self):
+        return bool(getattr(self.cfg, "OPENCLAW_GENERIC_NODE_EVENTS", False))
+
+    def _text_or_empty(self, value):
+        if value is None:
+            return ""
+        try:
+            return str(value).strip()
+        except Exception:
+            return ""
+
+    def _bool_or_default(self, value, default_value):
+        if value is None:
+            return bool(default_value)
+        return bool(value)
+
+    def _alert_uplink_mode(self):
+        mode = self._text_or_empty(getattr(self.cfg, "OPENCLAW_ALERT_UPLINK_MODE", "agent_request")).lower()
+        if mode == "raw_node_event":
+            return mode
+        return "agent_request"
+
+    def _format_business_alert_message(self, code, message, details):
+        lines = ["[QuecPython Alert]"]
+        device_id = self._text_or_empty(getattr(self.cfg, "DEVICE_ID", ""))
+        if device_id:
+            lines.append("device: " + device_id)
+        code_text = self._text_or_empty(code)
+        if code_text:
+            lines.append("code: " + code_text)
+        message_text = self._text_or_empty(message)
+        if message_text:
+            lines.append("message: " + message_text)
+        details_text = ""
+        if details not in (None, ""):
+            if isinstance(details, (dict, list, tuple)):
+                try:
+                    details_text = dumps(details)
+                except Exception:
+                    details_text = self._text_or_empty(details)
+            else:
+                details_text = self._text_or_empty(details)
+        if details_text:
+            lines.append("details: " + details_text)
+        return "\n".join(lines)
+
+    def queue_agent_request(
+        self,
+        message,
+        session_key="",
+        deliver=None,
+        channel="",
+        to="",
+        receipt=None,
+        receipt_text="",
+        thinking="",
+        timeout_seconds=0,
+    ):
+        message_text = self._text_or_empty(message)
+        if not message_text:
+            return False
+
+        payload = {"message": message_text}
+
+        session_key_text = self._text_or_empty(session_key) or self._text_or_empty(
+            getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_SESSION_KEY", "")
+        )
+        if session_key_text:
+            payload["sessionKey"] = session_key_text
+
+        deliver_default = getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_DELIVER", False)
+        if self._bool_or_default(deliver, deliver_default):
+            payload["deliver"] = True
+
+        channel_text = self._text_or_empty(channel) or self._text_or_empty(
+            getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_CHANNEL", "")
+        )
+        if channel_text:
+            payload["channel"] = channel_text
+
+        to_text = self._text_or_empty(to) or self._text_or_empty(
+            getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_TO", "")
+        )
+        if to_text:
+            payload["to"] = to_text
+
+        receipt_default = getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_RECEIPT", False)
+        if self._bool_or_default(receipt, receipt_default):
+            payload["receipt"] = True
+
+        receipt_text_value = self._text_or_empty(receipt_text) or self._text_or_empty(
+            getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_RECEIPT_TEXT", "")
+        )
+        if receipt_text_value:
+            payload["receiptText"] = receipt_text_value
+
+        thinking_value = self._text_or_empty(thinking) or self._text_or_empty(
+            getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_THINKING", "")
+        )
+        if thinking_value:
+            payload["thinking"] = thinking_value
+
+        timeout_value = timeout_seconds or getattr(self.cfg, "OPENCLAW_AGENT_REQUEST_TIMEOUT_SECONDS", 0)
+        if isinstance(timeout_value, int) and timeout_value > 0:
+            payload["timeoutSeconds"] = timeout_value
+
+        return self._enqueue_request("node.event", {
+            "event": "agent.request",
+            "payload": payload,
+        }, False)
+
+    def queue_business_alert(
+        self,
+        code,
+        message,
+        details=None,
+        session_key="",
+        deliver=None,
+        channel="",
+        to="",
+        severity="warning",
+    ):
+        payload = {
+            "code": self._text_or_empty(code),
+            "message": self._text_or_empty(message),
+            "details": details,
+            "severity": self._text_or_empty(severity) or "warning",
+        }
+        if self._alert_uplink_mode() == "raw_node_event":
+            return self._queue_event("alert", payload, payload["severity"])
+
+        return self.queue_agent_request(
+            self._format_business_alert_message(payload["code"], payload["message"], details),
+            session_key=session_key,
+            deliver=deliver,
+            channel=channel,
+            to=to,
+        )
+
     def _queue_event(self, event_name, payload, severity):
         envelope = {
             "event_id": self._next_id(event_name),
@@ -328,42 +481,190 @@ class WsNativeTransport(object):
             "ts": wall_time_ms(),
             "payload": payload,
         }
-        self._enqueue_request("node.event", {
+        return self._enqueue_request("node.event", {
             "event": event_name,
             "payload": envelope,
         }, False)
 
     def _enqueue_request(self, method, params, critical):
-        if len(self._outbox) >= int(getattr(self.cfg, "OUTBOX_MAX", 64)):
-            index = 0
-            while index < len(self._outbox):
-                if not self._outbox[index].get("critical"):
+        max_size = int(getattr(self.cfg, "OUTBOX_MAX", 64))
+        dropped = False
+        self._acquire_queue()
+        try:
+            if len(self._outbox) >= max_size:
+                index = self._find_droppable_outbox_index_locked(True)
+                if index < 0:
+                    index = self._find_droppable_outbox_index_locked(False)
+                if index >= 0:
                     self._outbox.pop(index)
-                    break
-                index += 1
-            if len(self._outbox) >= int(getattr(self.cfg, "OUTBOX_MAX", 64)):
-                self._outbox.pop(0)
-        self._outbox.append({
-            "method": method,
-            "params": params,
-            "critical": bool(critical),
-            "attempts": 0,
-        })
-        self._update_depths()
+                    dropped = True
+                elif not critical:
+                    self._update_depths_locked()
+                    return False
+            self._outbox.append({
+                "method": method,
+                "params": params,
+                "critical": bool(critical),
+                "attempts": 0,
+                "next_attempt_ms": 0,
+                "sending": False,
+            })
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+        if dropped:
+            self.state.note_outbox_error("OUTBOX_DROP_OLDEST")
+        return True
 
     def _cache_result(self, key, params):
-        self._result_cache[key] = params
-        self._result_cache_keys.append(key)
-        max_size = int(getattr(self.cfg, "DEDUPE_WINDOW", 64))
-        while len(self._result_cache_keys) > max_size:
-            old_key = self._result_cache_keys.pop(0)
-            if old_key in self._result_cache:
-                del self._result_cache[old_key]
-        self._update_depths()
+        self._acquire_queue()
+        try:
+            self._result_cache[key] = params
+            self._result_cache_keys.append(key)
+            max_size = int(getattr(self.cfg, "DEDUPE_WINDOW", 64))
+            while len(self._result_cache_keys) > max_size:
+                old_key = self._result_cache_keys.pop(0)
+                if old_key in self._result_cache:
+                    del self._result_cache[old_key]
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
 
     def _next_id(self, prefix):
         self._seq += 1
         return "%s_%s_%s" % (prefix, str(utime.ticks_ms()), str(self._seq))
 
     def _update_depths(self):
+        self._acquire_queue()
+        try:
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+
+    def _update_depths_locked(self):
         self.state.update_queue_depths(len(self._pending_cmds), len(self._outbox), len(self._result_cache_keys))
+
+    def _acquire_queue(self):
+        if self._queue_lock is not None:
+            self._queue_lock.acquire()
+
+    def _release_queue(self):
+        if self._queue_lock is not None:
+            self._queue_lock.release()
+
+    def _pop_pending_cmd(self):
+        cmd = None
+        self._acquire_queue()
+        try:
+            if self._pending_cmds:
+                cmd = self._pending_cmds.pop(0)
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+        return cmd
+
+    def _get_cached_result(self, key):
+        cached = None
+        self._acquire_queue()
+        try:
+            cached = self._result_cache.get(key)
+        finally:
+            self._release_queue()
+        return cached
+
+    def _claim_outbox_item(self):
+        item = None
+        self._acquire_queue()
+        try:
+            if self._outbox:
+                head = self._outbox[0]
+                if (not head.get("sending")) and self._outbox_retry_ready(head):
+                    head["sending"] = True
+                    item = head
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+        return item
+
+    def _finish_outbox_success(self, item):
+        self._acquire_queue()
+        try:
+            self._remove_outbox_item_locked(item)
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+
+    def _finish_outbox_failure(self, item):
+        removed = False
+        self._acquire_queue()
+        try:
+            current = self._find_outbox_item_locked(item)
+            if current is None:
+                self._update_depths_locked()
+                return False
+            current["sending"] = False
+            current["attempts"] = int(current.get("attempts") or 0) + 1
+            if current["attempts"] > int(getattr(self.cfg, "MAX_RETRY", 3)):
+                self._remove_outbox_item_locked(current)
+                removed = True
+            else:
+                current["next_attempt_ms"] = utime.ticks_add(
+                    utime.ticks_ms(),
+                    int(getattr(self.cfg, "OUTBOX_RETRY_BACKOFF_MS", 1000)) * current["attempts"],
+                )
+            self._update_depths_locked()
+        finally:
+            self._release_queue()
+        return removed
+
+    def _find_outbox_item_locked(self, item):
+        index = 0
+        while index < len(self._outbox):
+            if self._outbox[index] is item:
+                return self._outbox[index]
+            index += 1
+        return None
+
+    def _remove_outbox_item_locked(self, item):
+        index = 0
+        while index < len(self._outbox):
+            if self._outbox[index] is item:
+                self._outbox.pop(index)
+                return True
+            index += 1
+        return False
+
+    def _find_droppable_outbox_index_locked(self, prefer_non_critical):
+        index = 0
+        while index < len(self._outbox):
+            item = self._outbox[index]
+            if item.get("sending"):
+                index += 1
+                continue
+            if prefer_non_critical and item.get("critical"):
+                index += 1
+                continue
+            return index
+        return -1
+
+    def _outbox_retry_ready(self, item):
+        next_attempt_ms = item.get("next_attempt_ms") or 0
+        if not next_attempt_ms:
+            return True
+        return utime.ticks_diff(utime.ticks_ms(), next_attempt_ms) >= 0
+
+    def _is_fatal_outbox_error(self, err):
+        if isinstance(err, WsClosed):
+            return True
+        if isinstance(err, WsTimeout):
+            return False
+        if isinstance(err, WsError):
+            return True
+        text = str(err).lower()
+        if "ack timeout" in text:
+            return False
+        if "ack failed" in text:
+            return False
+        if "websocket closed" in text or "server closed websocket" in text or "socket write failed" in text:
+            return True
+        return False

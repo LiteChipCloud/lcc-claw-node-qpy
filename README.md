@@ -10,11 +10,11 @@
 
 当前版本聚焦 `ws_native` 最小可用闭环：
 1. 建链（WebSocket connect）
-2. 保活（heartbeat）
+2. 保活（WebSocket session + reconnect）
 3. 下发（invoke request）
 4. 回执（invoke result）
 5. 重连（reconnect）
-6. 主动上报（heartbeat/telemetry/lifecycle/alert）
+6. 主动上行（stock Gateway 默认走 `agent.request`）
 7. 只读工具目录（7 个内置工具）
 
 已完成的真实联调结论：
@@ -61,10 +61,11 @@ sequenceDiagram
 
 | 能力域 | 设计目标 | 当前仓库状态 |
 |---|---|---|
-| 官方 OpenClaw 基线兼容 | 零改 Gateway 源码接入 | 已实现 `connect.challenge + connect + node/event` 主链路 |
+| 官方 OpenClaw 基线兼容 | 零改 Gateway 源码接入 | 已实现 `connect.challenge + connect + node.invoke` 主链路 |
 | WebSocket 控制平面 | connect/auth/heartbeat/reconnect | 已实现文本帧握手、心跳、重连与 ACK 等待 |
 | 双向命令闭环 | request -> tool -> result | 已实现 `node.invoke.request -> ToolRunner -> node.invoke.result` |
-| 设备主动上报 | heartbeat/telemetry/alert/lifecycle | 已实现 heartbeat/telemetry/lifecycle，alert 可复用同一事件通道 |
+| 设备主动上报 | stock Gateway 兼容的业务上行 | 已实现 `agent.request` helper；可用于主动告警、人工介入请求、业务上报 |
+| 原始 `node.event` 扩展 | heartbeat/telemetry/lifecycle/alert | 仍保留为可选扩展路径，默认关闭，需 Gateway 自定义消费者 |
 | 首批只读工具 | 7 个只读诊断工具 | 已扩展到 `qpy.device.info/status/net.diag/sim.info/cell.info/runtime.status/tools.catalog` |
 | 可选远程签名 | `remote_signer_http` | 已提供设备侧接入与 host 侧 signer helper |
 | 本地仿真验证 | mock gateway smoke | 已有基础 smoke |
@@ -84,14 +85,19 @@ sequenceDiagram
 | `qpy.runtime.status` | runtime | 查看会话、重连、队列、错误与 signer 状态 | `online/reconnect_count/outbox_depth` |
 | `qpy.tools.catalog` | runtime | 查看设备当前声明的全部工具和别名 | `tool_count/tools[]` |
 
-## 4.2 主动事件目录
+## 4.2 主动上行目录
 
-| 事件 | 触发时机 | 用途 |
+| 路径 | stock Gateway 是否直接消费 | 用途 |
 |---|---|---|
-| `heartbeat` | 在线期间按周期发送 | 在线证明、活性检测 |
-| `telemetry` | 在线期间按周期发送 | 周期性设备状态快照 |
-| `lifecycle` | 启动、上线、下线、异常恢复 | 生命周期审计与联调诊断 |
-| `alert` | 业务或运行时异常阈值触发 | 主动告警，可接入上层告警中心 |
+| `node.event(event=\"agent.request\")` | 是 | 设备主动把业务告警、人工介入请求、结构化说明推送给 Gateway agent |
+| `node.event(event=\"notifications.changed\")` | 是 | 设备把通知变化映射成 Gateway system event |
+| `node.event(event=\"voice.transcript\")` | 是 | 语音转写类节点把文本送入 Gateway agent |
+| 原始 `heartbeat/telemetry/lifecycle/alert` | 否（默认） | 面向自定义 Gateway 扩展或企业内部观测面 |
+
+说明：
+1. 官方 OpenClaw Gateway 当前不会直接消费自定义 `heartbeat/telemetry/lifecycle/alert` 事件名。
+2. 因此，OSS 开源版默认把“设备主动告警”定位为 `agent.request` 兼容路径，而不是假设 Gateway 会自动显示 `alert`。
+3. 如果你自己扩展了 Gateway 的 `node.event` 消费器，可以把 `OPENCLAW_GENERIC_NODE_EVENTS=True` 并改用原始事件流。
 
 ## 5. 使用环境说明
 
@@ -105,19 +111,86 @@ sequenceDiagram
 1. 如果用户自有 QuecPython 设备、自有官方 OpenClaw Gateway，且协议与鉴权条件满足，则本项目按设计可用于把设备接入到他们自己的 Gateway。
 2. 如果目标 Gateway 强制设备身份签名，而设备本地无法完成签名，则仍坚持“零改 Gateway”，但需要外置 signer 等兼容补充能力。
 3. 如果用户希望从 Gateway 调用 `qpy.*` 命令，需确认目标 Gateway 已为该平台补充 `gateway.nodes.allowCommands`。
+4. 如果用户希望 Gateway 直接消费自定义 `heartbeat/telemetry/lifecycle/alert` 事件，则需要自行扩展 Gateway；官方基线默认只消费少数受支持的 `node.event` 类型。
 
 ## 6. 快速开始
 
 ### 6.1 接入步骤
 
 1. 阅读 [docs/quickstart.md](docs/quickstart.md)。
-2. 复制 [examples/config.ws_native.example.py](examples/config.ws_native.example.py) 并填写你的网关地址、token、`device_id`。
-3. 保持默认 `OPENCLAW_CLIENT_ID="node-host"`，并不要额外添加浏览器 `Origin` 头。
-4. 将 `usr_mirror/*` 部署到设备 `/usr`。
-5. 首次接入如出现 `pairing required`，在 Gateway 侧批准 pending device pairing。
-6. 如需从 Gateway 直接调用 `qpy.*`，先补充 `gateway.nodes.allowCommands`。
-7. 运行 `/usr/_main.py` 并观察连接日志。
-8. 使用 `tests/mock_gateway` 做本地闭环验证。
+2. 如果你通过 Windows/Host 工具向设备部署文件，先阅读 [docs/design/07-Windows部署与现场运维设计.md](docs/design/07-Windows部署与现场运维设计.md)，理解“增量代码部署”和“显式配置覆盖”的区别。
+3. 复制 [examples/config.ws_native.example.py](examples/config.ws_native.example.py) 并填写你的网关地址、token、`device_id`。
+   默认推荐保持 `OPENCLAW_GENERIC_NODE_EVENTS=False`，并使用 `OPENCLAW_ALERT_UPLINK_MODE=\"agent_request\"`。
+4. 保持默认 `OPENCLAW_CLIENT_ID="node-host"`，并不要额外添加浏览器 `Origin` 头。
+5. 将 `usr_mirror/*` 部署到设备 `/usr`。
+6. 首次接入如出现 `pairing required`，在 Gateway 侧批准 pending device pairing。
+7. 如需从 Gateway 直接调用 `qpy.*`，先补充 `gateway.nodes.allowCommands`。
+8. 运行 `/usr/_main.py` 并观察连接日志。
+9. 使用 `tests/mock_gateway` 做本地闭环验证。
+
+### 6.1.1 Windows / Host 侧推荐命令
+
+如果你是从 Mac 通过 SSH 控制一台连接了 QuecPython 设备的 Windows 电脑，推荐先把 Windows 侧 host tools 固化成常驻 toolkit：
+
+```bash
+# 一次性安装 / 升级 Windows 常驻 toolkit
+./scripts/windows_qpyctl.sh install
+
+# 日常增量部署：只同步并下发变更文件
+./scripts/windows_qpyctl.sh deploy --file app/command_worker.py --file app/runtime_state.py
+
+# 只启动运行时
+./scripts/windows_qpyctl.sh start
+
+# 读取运行时快照
+./scripts/windows_qpyctl.sh snapshot
+
+# 直接透传设备文件系统 CLI
+./scripts/windows_qpyctl.sh fs --json --port COM6 ls --path /usr
+```
+
+这条路径的好处是：
+1. `host_tools` 只在安装或升级时同步一次。
+2. 日常代码联调只同步指定 runtime 文件。
+3. `start/snapshot/fs` 不再依赖临时复制脚本到 Windows 用户目录。
+
+更详细的职责分层见 [docs/design/08-Windows常驻Toolkit与SSH执行模型.md](docs/design/08-Windows常驻Toolkit与SSH执行模型.md)。
+
+如果你直接在 Windows 本机操作，也可以继续使用下面这些 PowerShell 包装命令：
+
+首次安装或全量同步：
+
+```powershell
+$env:QPY_PUSH_CONFIG = 'auto'
+powershell -ExecutionPolicy Bypass -File .\scripts\deploy_to_device.ps1
+```
+
+日常增量部署：
+
+```powershell
+$env:QPY_FILES = 'app/command_worker.py,app/runtime_state.py,app/transport_ws_openclaw.py'
+powershell -ExecutionPolicy Bypass -File .\scripts\deploy_to_device.ps1
+```
+
+显式配置覆盖：
+
+```powershell
+$env:QPY_PUSH_CONFIG = 'override'
+$env:QPY_CONFIG_FILE = 'C:\path\to\live-config.py'
+powershell -ExecutionPolicy Bypass -File .\scripts\deploy_to_device.ps1
+```
+
+独立启动运行时：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\start_runtime.ps1
+```
+
+查看运行时快照：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\debug_snapshot.ps1
+```
 
 ### 6.2 官方 Gateway 实测闭环
 
@@ -143,7 +216,7 @@ sequenceDiagram
 ### 6.3 运行截图（示例）
 
 > 以下为目标效果示例（来自集成联调环境）：命令下发 -> 原始结果 -> 状态卡片。
-> 说明：截图只展示 `qpy.device.status` 的一个查询场景，不代表仓库能力上限。当前仓库已实现 7 个只读工具、`node.invoke.request/result` 闭环，以及 `heartbeat/telemetry/lifecycle/alert` 事件通道。
+> 说明：截图只展示 `qpy.device.status` 的一个查询场景，不代表仓库能力上限。当前仓库已实现 7 个只读工具、`node.invoke.request/result` 闭环，以及两类主动上行路径：`agent.request`（官方 Gateway 兼容）与原始 `node.event` 扩展（自定义 Gateway 可选）。
 
 ![步骤1：在 OpenClaw 聊天中下发设备状态查询指令](docs/images/e2e/step-01-request.jpg)
 
@@ -157,6 +230,20 @@ sequenceDiagram
 
 ```text
 lcc-claw-node-qpy/
+├── host_tools/
+│   ├── qpy_debug_snapshot.py
+│   ├── qpy_device_fs_cli.py
+│   ├── qpy_incremental_deploy.py
+│   ├── qpy_runtime_start.py
+│   ├── qpy_tool_paths.py
+│   └── runtime_manifest.json
+├── scripts/
+│   ├── build_release_assets.sh
+│   ├── debug_snapshot.ps1
+│   ├── deploy_to_device.ps1
+│   ├── start_runtime.ps1
+│   ├── windows_qpyctl.ps1
+│   └── windows_qpyctl.sh
 ├── usr_mirror/
 │   ├── _main.py
 │   └── app/
@@ -175,7 +262,9 @@ lcc-claw-node-qpy/
 │   └── design/
 ├── tests/
 ├── tools/
-│   └── remote_signer_http.mjs
+│   ├── gateway_soak_probe.py
+│   ├── remote_signer_http.mjs
+│   └── sanitize_check.py
 └── .github/
 ```
 
@@ -190,6 +279,8 @@ lcc-claw-node-qpy/
 | [docs/design/04-可靠性与安全设计.md](docs/design/04-可靠性与安全设计.md) | 重连策略、幂等、脱敏与风控 |
 | [docs/design/05-Gateway双向通信详细设计.md](docs/design/05-Gateway双向通信详细设计.md) | 双向通信详细设计：下发、回执、主动事件、鉴权、幂等、告警 |
 | [docs/design/06-OSS功能范围与第三方接入说明.md](docs/design/06-OSS功能范围与第三方接入说明.md) | 开源边界、第三方接入条件、零改 Gateway 语义 |
+| [docs/design/07-Windows部署与现场运维设计.md](docs/design/07-Windows部署与现场运维设计.md) | Windows/Host 侧部署、配置保护、增量发布与恢复处置 |
+| [docs/design/08-Windows常驻Toolkit与SSH执行模型.md](docs/design/08-Windows常驻Toolkit与SSH执行模型.md) | Mac SSH 调用、Windows 常驻 toolkit、固定入口 |
 
 ## 9. 安全与开源收口
 

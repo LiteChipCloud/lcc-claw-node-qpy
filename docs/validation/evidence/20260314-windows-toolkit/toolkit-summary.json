@@ -1,0 +1,84 @@
+{
+  "capturedAt": "2026-03-14T11:10:00+08:00",
+  "windowsToolkit": {
+    "install": {
+      "status": "passed",
+      "toolkitDir": "D:/litechiptech/embedded/tools/lcc-qpy-host-tools",
+      "runtimeStageDir": "D:/litechiptech/embedded/staging/lcc-claw-node-qpy/usr_mirror"
+    },
+    "snapshot": {
+      "status": "passed",
+      "online": true,
+      "protocol": 3,
+      "logicalDeviceId": "qpy-win-lab-01",
+      "connectSuccesses": 1,
+      "reconnectCount": 0,
+      "deviceTokenCached": true,
+      "lastCmdTool": "qpy.tools.catalog"
+    },
+    "postDeploySnapshot": {
+      "status": "passed",
+      "online": true,
+      "protocol": 3,
+      "logicalDeviceId": "qpy-win-lab-01",
+      "connectSuccesses": 1,
+      "reconnectCount": 0,
+      "deviceTokenCached": true,
+      "lastCmdTool": "qpy.tools.catalog"
+    },
+    "tmpCleanupReport": {
+      "status": "passed",
+      "mode": "report-only",
+      "deleteCandidates": 7,
+      "scannedPaths": [
+        "/usr/app",
+        "/usr/app/tools"
+      ]
+    }
+  },
+  "deploySamples": [
+    {
+      "file": "app/command_worker.py",
+      "status": "passed",
+      "localSize": 3886,
+      "bytesWritten": 3886,
+      "remoteSize": 3886,
+      "liveFilePreserved": true,
+      "observedLiveSize": 3886,
+      "residualTmp": "/usr/app/command_worker.py.upload_1773421538485.tmp",
+      "finding": "adaptive batch policy restored the final 46-byte tail batch and preserved the live file during commit"
+    },
+    {
+      "file": "app/runtime_state.py",
+      "status": "passed",
+      "localSize": 6707,
+      "remoteSize": 6707,
+      "verificationOk": true,
+      "finding": "medium-size runtime file passed with the 4-chunk policy"
+    },
+    {
+      "file": "app/tools/tool_runtime_status.py",
+      "status": "passed",
+      "localSize": 358,
+      "remoteSize": 358,
+      "verificationOk": true,
+      "finding": "resident toolkit wrapper path is valid for targeted small-file deploy"
+    },
+    {
+      "file": "app/tools/tool_probe.py",
+      "status": "passed",
+      "localSize": 12814,
+      "remoteSize": 12814,
+      "verificationOk": true,
+      "timeoutOverride": 120,
+      "finding": "large-file REPL deploy passed with the 2-chunk policy plus a higher deploy timeout budget"
+    }
+  ],
+  "conclusions": [
+    "Windows resident toolkit install path is working",
+    "snapshot/start/fs class operations no longer require re-copying host tools to the Windows user home",
+    "single-file deploy through scripts/windows_qpyctl.sh is proven for small, medium and larger runtime files",
+    "adaptive batch policy plus larger timeout budget restored command_worker.py, runtime_state.py and tool_probe.py deploy success",
+    "historical stale tmp files are now reportable through cleanup-tmp and can be handled by a separate explicit recovery step"
+  ]
+}

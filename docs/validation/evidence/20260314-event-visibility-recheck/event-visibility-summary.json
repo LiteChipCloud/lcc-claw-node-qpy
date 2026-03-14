@@ -1,0 +1,66 @@
+{
+  "command": "qpy.runtime.status",
+  "eventCount": 7,
+  "eventNames": [
+    "connect.challenge",
+    "health",
+    "tick",
+    "health",
+    "tick",
+    "tick",
+    "health"
+  ],
+  "innerEvents": [],
+  "runtimeSummary": {
+    "online": true,
+    "connect_attempts": 3,
+    "connect_successes": 2,
+    "reconnect_count": 1,
+    "consecutive_failures": 0,
+    "last_error_code": "CONNECT_FAILED",
+    "last_event": "node.invoke.request",
+    "last_cmd_tool": "qpy.runtime.status",
+    "pending_cmds": 0,
+    "outbox_depth": 0,
+    "result_cache_depth": 24,
+    "device_token_cached": "masked:3cbc87c768",
+    "last_signer": {
+      "logical_device_id": "masked:2d532581bc",
+      "url": "http://124.70.221.88:8787/sign",
+      "signed_at": 1773431978218
+    },
+    "status": "succeeded",
+    "result_code": "OK",
+    "duration_ms": 1,
+    "tool": "qpy.runtime.status",
+    "requested_tool": "qpy.runtime.status",
+    "error": null
+  },
+  "selectedNode": {
+    "nodeId": "masked:354a779c25",
+    "displayName": "QuecPython Windows Lab Node",
+    "platform": "quectel",
+    "version": "v1.0.0-test",
+    "deviceFamily": "quecpython",
+    "caps": [
+      "diagnostics",
+      "network",
+      "telemetry"
+    ],
+    "commands": [
+      "qpy.cell.info",
+      "qpy.device.info",
+      "qpy.device.status",
+      "qpy.net.diag",
+      "qpy.runtime.status",
+      "qpy.sim.info",
+      "qpy.tools.catalog",
+      "tool_device_info",
+      "tool_net_diag"
+    ],
+    "paired": true,
+    "connected": true,
+    "connectedAtMs": 1773431978389,
+    "remoteIp": "masked:d43dbe8549"
+  }
+}
