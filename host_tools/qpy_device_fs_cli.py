@@ -4,7 +4,7 @@ QuecPython device file-system CLI.
 
 Capabilities:
 1) tree: recursive listing from device path (default /usr) via REPL.
-2) mkdir: create directory with ql_fs.mkdirs.
+2) mkdir: create directory with ql_fs.mkdirs or uos.mkdir fallback.
 3) rm: remove file with uos.remove.
 4) rmdir: remove directory with uos.rmdir.
 5) run: execute script via example.exec.
@@ -216,6 +216,28 @@ def single_quote_qpy(text: str) -> str:
     return (text or "").replace("\\", "/").replace("'", "\\'")
 
 
+def mkdir_repl_lines(path: str) -> List[str]:
+    target = single_quote_qpy(normalize_remote_path(path))
+    return [
+        "import uos",
+        "_mk_target='%s'" % target,
+        "def _mk_dirs(_p):",
+        " parts=[x for x in _p.split('/') if x]",
+        " cur=''",
+        " for _seg in parts:",
+        "  cur += '/' + _seg",
+        "  try:",
+        "   uos.mkdir(cur)",
+        "  except Exception:",
+        "   pass",
+        "try:",
+        " import ql_fs",
+        " ql_fs.mkdirs(_mk_target)",
+        "except Exception:",
+        " _mk_dirs(_mk_target)",
+    ]
+
+
 def extract_json_array(raw: str) -> tuple[List[Dict[str, Any]], bool]:
     text = raw or ""
     candidates = re.findall(r"(\[\{.*?\}\]|\[\s*\])", text, flags=re.S)
@@ -413,16 +435,18 @@ def run_push_repl(
     combined_raw: List[str] = []
 
     init_lines = [
-        "import gc,ql_fs,uos",
+        "import gc,uos",
         "gc.collect()",
-        "ql_fs.mkdirs('%s')" % remote_dir_qpy,
+    ]
+    init_lines.extend(mkdir_repl_lines(remote_dir_qpy))
+    init_lines.extend([
         "_entries=uos.listdir('%s')" % remote_dir_qpy,
         "if '%s' in _entries: uos.remove('%s')" % (tmp_name_qpy, tmp_path_qpy),
         "f=open('%s','wb')" % tmp_path_qpy,
         "f.close()",
         "gc.collect()",
         "print('push_init_ok')",
-    ]
+    ])
     raw = repl_send_lines(
         port,
         baud,
@@ -663,7 +687,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_tree.add_argument("--path", default="/usr", help="Root path, default /usr.")
     p_tree.add_argument("--max-depth", type=int, default=6, help="Max recursion depth.")
 
-    p_mkdir = sp.add_parser("mkdir", help="Create directory via ql_fs.mkdirs.")
+    p_mkdir = sp.add_parser("mkdir", help="Create directory via ql_fs.mkdirs or uos.mkdir fallback.")
     p_mkdir.add_argument("--path", required=True, help="Directory path to create.")
 
     p_rm = sp.add_parser("rm", help="Remove file via uos.remove.")
@@ -729,11 +753,7 @@ def main() -> int:
             result = run_repl_op(
                 port,
                 baud,
-                [
-                    "import ql_fs",
-                    "ql_fs.mkdirs('%s')" % single_quote_qpy(path),
-                    "print('mkdir_ok')",
-                ],
+                mkdir_repl_lines(path) + ["print('mkdir_ok')"],
                 success_marker="mkdir_ok",
                 timeout=timeout,
             )

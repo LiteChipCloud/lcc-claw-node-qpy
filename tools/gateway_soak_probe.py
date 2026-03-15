@@ -341,6 +341,9 @@ def summarize_runtime_status(payload: dict[str, Any]) -> dict[str, Any]:
         "last_error_code",
         "last_event",
         "last_cmd_tool",
+        "last_probe_tool",
+        "last_probe_duration_ms",
+        "last_probe_timings",
         "pending_cmds",
         "outbox_depth",
         "result_cache_depth",
@@ -382,6 +385,9 @@ def summarize_device_status(payload: dict[str, Any]) -> dict[str, Any]:
         value = payload.get(key)
         if isinstance(value, dict):
             summary[key] = sanitize_payload(value)
+    for key in ("probe_duration_ms", "probe_timings_ms"):
+        if key in payload:
+            summary[key] = sanitize_payload(payload.get(key), key)
     for key in ("online", "signal", "rat", "operator", "safe_mode"):
         if key in payload:
             summary[key] = sanitize_payload(payload.get(key), key)

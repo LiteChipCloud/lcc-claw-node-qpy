@@ -306,9 +306,74 @@ def gather_data_context():
     return data
 
 
-def gather_cell_info():
+def _fill_cell_serving_from_signal(data, signal):
+    if not isinstance(signal, dict):
+        return
+    for source_key, target_key in (
+        ("serving_ci", "ci"),
+        ("serving_lac", "lac"),
+        ("serving_mcc", "mcc"),
+        ("serving_mnc", "mnc"),
+    ):
+        value = signal.get(source_key)
+        if ok_value(value):
+            data["serving"][target_key] = value
+
+
+def _fill_cell_serving_from_raw(data):
+    raw = data.get("raw")
+    if not (isinstance(raw, (list, tuple)) and len(raw) >= 3):
+        return
+    rows = raw[2]
+    if not (isinstance(rows, (list, tuple)) and rows):
+        return
+    row = rows[0]
+    if not isinstance(row, (list, tuple)):
+        return
+    mapping = (
+        (1, "ci"),
+        (2, "mcc"),
+        (3, "mnc"),
+        (5, "lac"),
+    )
+    for index, key in mapping:
+        if len(row) > index and ok_value(row[index]):
+            data["serving"][key] = row[index]
+
+
+def _fill_cell_neighbors_from_raw(data):
+    raw = data.get("raw")
+    if not (isinstance(raw, (list, tuple)) and len(raw) >= 3):
+        return
+    rows = raw[2]
+    if not isinstance(rows, (list, tuple)):
+        return
+    collected = {
+        "ci": [],
+        "mcc": [],
+        "mnc": [],
+        "lac": [],
+    }
+    mapping = (
+        (1, "ci"),
+        (2, "mcc"),
+        (3, "mnc"),
+        (5, "lac"),
+    )
+    for row in rows:
+        if not isinstance(row, (list, tuple)):
+            continue
+        for index, key in mapping:
+            if len(row) > index and ok_value(row[index]):
+                collected[key].append(row[index])
+    for key in ("ci", "mcc", "mnc", "lac"):
+        if collected[key] and key not in data["neighbors"]:
+            data["neighbors"][key] = collected[key]
+
+
+def gather_cell_info(network_info=None):
     net = safe_import("net")
-    if not net:
+    if not net and not isinstance(network_info, dict):
         return {"available": False}
 
     data = {
@@ -317,32 +382,49 @@ def gather_cell_info():
         "neighbors": {},
     }
 
-    for method_name, key in (
-        ("getServingCi", "ci"),
-        ("getServingLac", "lac"),
-        ("getServingMcc", "mcc"),
-        ("getServingMnc", "mnc"),
-    ):
-        if hasattr(net, method_name):
-            value = safe_call(getattr(net, method_name))
-            if ok_value(value):
-                data["serving"][key] = value
+    if isinstance(network_info, dict):
+        _fill_cell_serving_from_signal(data, network_info.get("signal"))
+        cell_scan = network_info.get("cell_scan")
+        if isinstance(cell_scan, dict):
+            raw = cell_scan.get("raw")
+            if ok_value(raw):
+                data["raw"] = raw
+                data["raw_source"] = cell_scan.get("source") or "reused.cell_scan"
+                _fill_cell_serving_from_raw(data)
+                _fill_cell_neighbors_from_raw(data)
 
-    for method_name, key in (
-        ("getCi", "ci"),
-        ("getLac", "lac"),
-        ("getMcc", "mcc"),
-        ("getMnc", "mnc"),
-    ):
-        if hasattr(net, method_name):
-            value = safe_call(getattr(net, method_name))
-            if ok_value(value):
-                data["neighbors"][key] = value
+    if net:
+        if not data["serving"]:
+            for method_name, key in (
+                ("getServingCi", "ci"),
+                ("getServingLac", "lac"),
+                ("getServingMcc", "mcc"),
+                ("getServingMnc", "mnc"),
+            ):
+                if hasattr(net, method_name):
+                    value = safe_call(getattr(net, method_name))
+                    if ok_value(value):
+                        data["serving"][key] = value
 
-    cells, source = safe_attr_call(net, ["getCellInfo", "currentCellInfo"])
-    if ok_value(cells):
-        data["raw"] = cells
-        data["raw_source"] = source
+        if "raw" not in data:
+            cells, source = safe_attr_call(net, ["getCellInfo", "currentCellInfo"])
+            if ok_value(cells):
+                data["raw"] = cells
+                data["raw_source"] = source
+                _fill_cell_serving_from_raw(data)
+                _fill_cell_neighbors_from_raw(data)
+
+        if not data["neighbors"]:
+            for method_name, key in (
+                ("getCi", "ci"),
+                ("getLac", "lac"),
+                ("getMcc", "mcc"),
+                ("getMnc", "mnc"),
+            ):
+                if hasattr(net, method_name):
+                    value = safe_call(getattr(net, method_name))
+                    if ok_value(value):
+                        data["neighbors"][key] = value
     return data
 
 
@@ -391,7 +473,7 @@ def build_device_status(cfg, state, mask_sensitive):
     network_info = measure_step("gather_network_info", timings, gather_network_info)
     data_context = measure_step("gather_data_context", timings, gather_data_context)
     runtime = measure_step("gather_runtime_info", timings, gather_runtime_info, cfg, state)
-    cell = measure_step("gather_cell_info", timings, gather_cell_info)
+    cell = measure_step("gather_cell_info", timings, gather_cell_info, network_info)
     recommendations = measure_step(
         "build_recommendations",
         timings,
