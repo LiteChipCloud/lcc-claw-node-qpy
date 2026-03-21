@@ -381,6 +381,35 @@ flowchart LR
 2. 因为 Windows 侧已安装标准 `QPYcom.exe`，所以这次恢复不必再继续依赖慢速 REPL 大文件推送；对 `tool_probe.py` 这类更大文件，`QPYcom` 已经成为更优的常驻 toolkit 快速路径。
 3. 这一步把“Windows 执行面失控”重新收口成“Windows 执行面可控、runtime 已重新对齐、Gateway 外部可复核”，后续 blocker 不再是设备控制，而是重新打开针对 `qpy.device.status` 的长窗定位。
 
+## 6.14 2026-03-21 OpenClaw 移动端设备状态截图补证
+
+新增证据：
+
+- [report.md](/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260321-openclaw-device-status-mobile/report.md)
+- [openclaw-device-status-mobile-01-request.jpg](/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260321-openclaw-device-status-mobile/openclaw-device-status-mobile-01-request.jpg)
+- [openclaw-device-status-mobile-02-json-top.jpg](/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260321-openclaw-device-status-mobile/openclaw-device-status-mobile-02-json-top.jpg)
+- [openclaw-device-status-mobile-03-json-bottom.jpg](/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260321-openclaw-device-status-mobile/openclaw-device-status-mobile-03-json-bottom.jpg)
+- [openclaw-device-status-mobile-04-card.jpg](/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260321-openclaw-device-status-mobile/openclaw-device-status-mobile-04-card.jpg)
+
+```mermaid
+flowchart LR
+  A["mobile OpenClaw session"] --> B["invoke @pydevice.status"]
+  B --> C["raw JSON result visible"]
+  C --> D["card summary visible"]
+```
+
+| 检查项 | 结果 | 说明 |
+|---|---|---|
+| 移动端可发起 `@pydevice.status` | 通过 | 截图中保留了请求发起过程 |
+| 原始 JSON 结果可见 | 通过 | 可以看到 `ok=true` 及设备状态字段 |
+| 模组 / 固件 / 驻网 / IP 信息可见 | 通过 | 画面可识别 `EC800K`、固件串、已注册、IP |
+| 卡片化结果可见 | 通过 | 客户端已把状态摘要渲染为卡片 |
+
+补充说明：
+1. 这一组图是“客户端侧功能证据”，证明了 `qpy.device.status` 在抓图时刻已经能通过 OpenClaw 会话被调用并返回结果。
+2. 它不替代串口日志、USB 调试、长窗 soak，也不回答设备实物当前存放位置；这些问题仍需要单独的资产台账与 bring-up 证据。
+3. 因为截图里包含设备标识信息，所以该组图片只应作为内部 validation evidence 保存，不应直接外发。
+
 ## 7. 结论
 
 1. `Windows resident toolkit` 这条路已经成立，后续 `snapshot/start/fs` 不需要再重复同步 host tools。
