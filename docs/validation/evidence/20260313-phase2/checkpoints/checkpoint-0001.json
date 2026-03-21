@@ -1,0 +1,140 @@
+{
+  "mode": "soak",
+  "capturedAt": "2026-03-13T18:57:29+08:00",
+  "startedAt": "2026-03-13T18:54:24+08:00",
+  "finishedAt": null,
+  "config": {
+    "durationSec": 240.0,
+    "maxSamples": 2,
+    "invokeTimeoutMs": 30000,
+    "eventWindowSec": 95.0,
+    "runtimeIntervalSec": 60.0,
+    "deviceIntervalSec": 600.0,
+    "catalogIntervalSec": 600.0,
+    "maxConsecutiveFailures": 6,
+    "checkpointEverySamples": 1
+  },
+  "thresholdsMs": {
+    "qpy.runtime.status": 5000,
+    "qpy.device.status": 30000,
+    "qpy.tools.catalog": 5000
+  },
+  "samples": {
+    "total": 1,
+    "successful": 0,
+    "failed": 1,
+    "consecutiveFailures": 1,
+    "lastSampleFile": "/tmp/qpy_soak_phase2/samples/0001-qpy_runtime_status+qpy_device_status+qpy_tools_catalog.json",
+    "lastSuccessAt": null,
+    "lastFailureAt": "2026-03-13T18:57:29+08:00"
+  },
+  "commands": {
+    "qpy.runtime.status": {
+      "runs": 1,
+      "successful": 0,
+      "failed": 1,
+      "thresholdMs": 5000,
+      "thresholdBreaches": 1,
+      "durationsMs": [
+        30003
+      ],
+      "durationStats": {
+        "count": 1,
+        "min": 30003,
+        "max": 30003,
+        "avg": 30003,
+        "p50": 30003,
+        "p95": 30003
+      },
+      "lastSuccessAt": null,
+      "lastFailureAt": "2026-03-13T18:57:29+08:00",
+      "lastSummary": null,
+      "lastError": {
+        "type": "WsError",
+        "message": "node.invoke failed for qpy.runtime.status: {\"code\": \"UNAVAILABLE\", \"message\": \"TIMEOUT: node invoke timed out\", \"details\": {\"nodeError\": {\"code\": \"TIMEOUT\", \"message\": \"node invoke timed out\"}}}"
+      }
+    },
+    "qpy.device.status": {
+      "runs": 1,
+      "successful": 0,
+      "failed": 1,
+      "thresholdMs": 30000,
+      "thresholdBreaches": 1,
+      "durationsMs": [
+        30006
+      ],
+      "durationStats": {
+        "count": 1,
+        "min": 30006,
+        "max": 30006,
+        "avg": 30006,
+        "p50": 30006,
+        "p95": 30006
+      },
+      "lastSuccessAt": null,
+      "lastFailureAt": "2026-03-13T18:57:29+08:00",
+      "lastSummary": null,
+      "lastError": {
+        "type": "WsError",
+        "message": "node.invoke failed for qpy.device.status: {\"code\": \"UNAVAILABLE\", \"message\": \"TIMEOUT: node invoke timed out\", \"details\": {\"nodeError\": {\"code\": \"TIMEOUT\", \"message\": \"node invoke timed out\"}}}"
+      }
+    },
+    "qpy.tools.catalog": {
+      "runs": 1,
+      "successful": 0,
+      "failed": 1,
+      "thresholdMs": 5000,
+      "thresholdBreaches": 1,
+      "durationsMs": [
+        30004
+      ],
+      "durationStats": {
+        "count": 1,
+        "min": 30004,
+        "max": 30004,
+        "avg": 30004,
+        "p50": 30004,
+        "p95": 30004
+      },
+      "lastSuccessAt": null,
+      "lastFailureAt": "2026-03-13T18:57:29+08:00",
+      "lastSummary": null,
+      "lastError": {
+        "type": "WsError",
+        "message": "node.invoke failed for qpy.tools.catalog: {\"code\": \"UNAVAILABLE\", \"message\": \"TIMEOUT: node invoke timed out\", \"details\": {\"nodeError\": {\"code\": \"TIMEOUT\", \"message\": \"node invoke timed out\"}}}"
+      }
+    }
+  },
+  "events": {
+    "totalObserved": 11,
+    "operatorVisibleEvents": [
+      "connect.challenge",
+      "health",
+      "tick"
+    ],
+    "nodeEventVisible": false,
+    "lastObservedAt": "2026-03-13T18:57:29+08:00"
+  },
+  "runtimeStatus": {
+    "remoteSignerObserved": false,
+    "reconnectCountSeries": [],
+    "lastObserved": null
+  },
+  "toolCatalog": {
+    "baselineTools": null,
+    "lastTools": null,
+    "driftDetected": false
+  },
+  "attentionFlags": [
+    "node.event frames not directly visible to operator session",
+    "qpy.device.status failures observed",
+    "qpy.device.status latency breached 30000ms",
+    "qpy.runtime.status failures observed",
+    "qpy.runtime.status latency breached 5000ms",
+    "qpy.tools.catalog failures observed",
+    "qpy.tools.catalog latency breached 5000ms",
+    "remote_signer_http not observed yet in runtime.status"
+  ],
+  "checkpointAt": "2026-03-13T18:57:29+08:00",
+  "checkpointSample": 1
+}

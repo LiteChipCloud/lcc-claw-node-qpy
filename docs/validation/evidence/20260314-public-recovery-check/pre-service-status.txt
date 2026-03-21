@@ -1,0 +1,20 @@
+● openclaw-gateway.service - OpenClaw Gateway (v2026.3.2)
+     Loaded: loaded (/home/openclaw/.config/systemd/user/openclaw-gateway.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-03-13 19:00:49 CST; 8h ago
+   Main PID: 86354 (openclaw-gatewa)
+      Tasks: 11 (limit: 2032)
+     Memory: 380.9M (peak: 426.5M)
+        CPU: 40.973s
+     CGroup: /user.slice/user-1000.slice/user@1000.service/app.slice/openclaw-gateway.service
+             └─86354 openclaw-gateway
+
+Mar 14 03:56:33 hcss-ecs-8836 node[86354]: 2026-03-13T19:56:33.672Z [discord] [default] auto-restart attempt 3/10 in 22s
+Mar 14 03:56:55 hcss-ecs-8836 node[86354]: 2026-03-13T19:56:55.633Z [discord] [default] starting provider
+Mar 14 03:56:55 hcss-ecs-8836 node[86354]: 2026-03-13T19:56:55.887Z [discord] [default] channel exited: Failed to resolve Discord application id
+Mar 14 03:56:55 hcss-ecs-8836 node[86354]: 2026-03-13T19:56:55.890Z [discord] [default] auto-restart attempt 4/10 in 41s
+Mar 14 03:57:37 hcss-ecs-8836 node[86354]: 2026-03-13T19:57:37.064Z [discord] [default] starting provider
+Mar 14 03:57:37 hcss-ecs-8836 node[86354]: 2026-03-13T19:57:37.317Z [discord] [default] channel exited: Failed to resolve Discord application id
+Mar 14 03:57:37 hcss-ecs-8836 node[86354]: 2026-03-13T19:57:37.320Z [discord] [default] auto-restart attempt 5/10 in 82s
+Mar 14 03:58:59 hcss-ecs-8836 node[86354]: 2026-03-13T19:58:59.782Z [discord] [default] starting provider
+Mar 14 03:59:00 hcss-ecs-8836 node[86354]: 2026-03-13T19:59:00.036Z [discord] [default] channel exited: Failed to resolve Discord application id
+Mar 14 03:59:00 hcss-ecs-8836 node[86354]: 2026-03-13T19:59:00.038Z [discord] [default] auto-restart attempt 6/10 in 166s

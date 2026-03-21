@@ -1,0 +1,113 @@
+{
+  "mode": "soak",
+  "capturedAt": "2026-03-14T17:53:50+08:00",
+  "startedAt": "2026-03-14T17:53:40+08:00",
+  "finishedAt": null,
+  "config": {
+    "durationSec": 21600.0,
+    "maxSamples": 0,
+    "invokeTimeoutMs": 30000,
+    "eventWindowSec": 95.0,
+    "runtimeIntervalSec": 300.0,
+    "deviceIntervalSec": 900.0,
+    "catalogIntervalSec": 1800.0,
+    "maxConsecutiveFailures": 6,
+    "checkpointEverySamples": 4
+  },
+  "thresholdsMs": {
+    "qpy.runtime.status": 5000,
+    "qpy.device.status": 30000,
+    "qpy.tools.catalog": 5000
+  },
+  "samples": {
+    "total": 1,
+    "successful": 0,
+    "failed": 1,
+    "consecutiveFailures": 1,
+    "lastSampleFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak/samples/0001-qpy_runtime_status+qpy_device_status+qpy_tools_catalog.json",
+    "lastSuccessAt": null,
+    "lastFailureAt": "2026-03-14T17:53:50+08:00"
+  },
+  "commands": {
+    "qpy.runtime.status": {
+      "runs": 0,
+      "successful": 0,
+      "failed": 0,
+      "thresholdMs": 5000,
+      "thresholdBreaches": 0,
+      "durationsMs": [],
+      "durationStats": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "avg": null,
+        "p50": null,
+        "p95": null
+      },
+      "lastSuccessAt": null,
+      "lastFailureAt": null,
+      "lastSummary": null,
+      "lastError": null
+    },
+    "qpy.device.status": {
+      "runs": 0,
+      "successful": 0,
+      "failed": 0,
+      "thresholdMs": 30000,
+      "thresholdBreaches": 0,
+      "durationsMs": [],
+      "durationStats": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "avg": null,
+        "p50": null,
+        "p95": null
+      },
+      "lastSuccessAt": null,
+      "lastFailureAt": null,
+      "lastSummary": null,
+      "lastError": null
+    },
+    "qpy.tools.catalog": {
+      "runs": 0,
+      "successful": 0,
+      "failed": 0,
+      "thresholdMs": 5000,
+      "thresholdBreaches": 0,
+      "durationsMs": [],
+      "durationStats": {
+        "count": 0,
+        "min": null,
+        "max": null,
+        "avg": null,
+        "p50": null,
+        "p95": null
+      },
+      "lastSuccessAt": null,
+      "lastFailureAt": null,
+      "lastSummary": null,
+      "lastError": null
+    }
+  },
+  "events": {
+    "totalObserved": 0,
+    "operatorVisibleEvents": [],
+    "nodeEventVisible": false,
+    "lastObservedAt": null
+  },
+  "runtimeStatus": {
+    "remoteSignerObserved": false,
+    "reconnectCountSeries": [],
+    "lastObserved": null
+  },
+  "toolCatalog": {
+    "baselineTools": null,
+    "lastTools": null,
+    "driftDetected": false
+  },
+  "attentionFlags": [
+    "node.event frames not directly visible to operator session",
+    "remote_signer_http not observed yet in runtime.status"
+  ]
+}

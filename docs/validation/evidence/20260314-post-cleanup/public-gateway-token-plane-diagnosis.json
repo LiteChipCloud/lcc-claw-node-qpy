@@ -1,0 +1,34 @@
+{
+  "capturedAtMs": 1773429441099,
+  "credentialInventory": {
+    "tokenFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-team/openclaw-state/credentials/gateway-token.txt",
+    "len": 48,
+    "sha256_12": "e01c28648be2"
+  },
+  "deviceLiveConfig": {
+    "source": "COM6 REPL -> /usr/app/config.py -> OPENCLAW_AUTH_TOKEN",
+    "tokenFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-team/openclaw-state/credentials/gateway-token-public.txt",
+    "len": 44,
+    "sha256_12": "6411c9bb659d",
+    "sameAsInventory": false
+  },
+  "operatorProbe": {
+    "withInventoryToken": {
+      "ok": false,
+      "errorCode": "AUTH_TOKEN_MISMATCH"
+    },
+    "withDeviceLiveToken": {
+      "ok": false,
+      "errorCode": "AUTH_TOKEN_MISMATCH"
+    }
+  },
+  "publicHostLogin": {
+    "rootWithProvidedPassword": false,
+    "openclawWithProvidedPassword": false
+  },
+  "inference": {
+    "deviceTokenEqualsOperatorToken": false,
+    "likelyCause": "public gateway operator auth plane is not aligned; likely gateway.remote.token and gateway.auth.token mismatch or a separate operator token is in effect",
+    "nextAction": "inspect /home/openclaw/.openclaw/openclaw.json on the public host and compare gateway.remote.token vs gateway.auth.token"
+  }
+}

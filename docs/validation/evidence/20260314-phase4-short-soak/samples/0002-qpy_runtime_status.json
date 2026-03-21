@@ -1,0 +1,18 @@
+{
+  "sampleIndex": 2,
+  "startedAt": "2026-03-14T04:30:02+08:00",
+  "finishedAt": "2026-03-14T04:30:12+08:00",
+  "requestedCommands": [
+    "qpy.runtime.status"
+  ],
+  "ok": false,
+  "eventWindowSec": 3.0,
+  "selectedNode": null,
+  "error": {
+    "type": "WsError",
+    "message": "websocket closed: 1000:"
+  },
+  "commandResults": [],
+  "eventCount": 0,
+  "events": []
+}

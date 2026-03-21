@@ -1,0 +1,31 @@
+{
+  "capturedAtMs": 1773427523039,
+  "command": [
+    "python3",
+    "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/tools/gateway_soak_probe.py",
+    "node-invoke",
+    "--url",
+    "ws://124.70.221.88:18789",
+    "--token-file",
+    "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-team/openclaw-state/credentials/gateway-token.txt",
+    "--connected-only",
+    "--node-platform",
+    "quectel",
+    "--node-family",
+    "quecpython",
+    "--command",
+    "qpy.runtime.status",
+    "--command",
+    "qpy.tools.catalog",
+    "--event-window-sec",
+    "3",
+    "--invoke-timeout-ms",
+    "30000"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "gateway_soak_probe error: gateway connect failed: {\"code\": \"INVALID_REQUEST\", \"message\": \"unauthorized: gateway token mismatch (set gateway.remote.token to match gateway.auth.token)\", \"details\": {\"code\": \"AUTH_TOKEN_MISMATCH\", \"authReason\": \"token_mismatch\"}}\n",
+  "ok": false,
+  "errorCode": "AUTH_TOKEN_MISMATCH",
+  "summary": "public gateway token inventory is out of sync with the live gateway auth token"
+}

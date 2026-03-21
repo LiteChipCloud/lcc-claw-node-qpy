@@ -1,0 +1,86 @@
+{
+  "sampleIndex": 45,
+  "startedAt": "2026-03-14T20:57:40+08:00",
+  "finishedAt": "2026-03-14T20:57:41+08:00",
+  "requestedCommands": [
+    "qpy.tools.catalog"
+  ],
+  "ok": true,
+  "eventWindowSec": 0.0,
+  "selectedNode": {
+    "nodeId": "masked:354a779c25",
+    "displayName": "QuecPython Windows Lab Node",
+    "platform": "quectel",
+    "version": "v1.0.0-test",
+    "deviceFamily": "quecpython",
+    "caps": [
+      "diagnostics",
+      "network",
+      "telemetry"
+    ],
+    "commands": [
+      "qpy.cell.info",
+      "qpy.device.info",
+      "qpy.device.status",
+      "qpy.net.diag",
+      "qpy.runtime.status",
+      "qpy.sim.info",
+      "qpy.tools.catalog",
+      "tool_device_info",
+      "tool_net_diag"
+    ],
+    "paired": true,
+    "connected": true,
+    "connectedAtMs": 1773479922155,
+    "remoteIp": "masked:7f1a54378a"
+  },
+  "error": null,
+  "commandResults": [
+    {
+      "command": "qpy.tools.catalog",
+      "ok": true,
+      "startedAtMs": 1773493060609,
+      "finishedAtMs": 1773493061490,
+      "durationMs": 881,
+      "summary": {
+        "tool_count": 7,
+        "tools": [],
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 2,
+        "tool": "qpy.tools.catalog",
+        "requested_tool": "qpy.tools.catalog",
+        "error": null
+      }
+    }
+  ],
+  "eventCount": 2,
+  "events": [
+    {
+      "type": "event",
+      "event": "connect.challenge",
+      "inner_event": null,
+      "payload_keys": [
+        "nonce",
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "health",
+      "inner_event": null,
+      "payload_keys": [
+        "agents",
+        "channelLabels",
+        "channelOrder",
+        "channels",
+        "defaultAgentId",
+        "durationMs",
+        "heartbeatSeconds",
+        "ok",
+        "sessions",
+        "ts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "capturedAtMs": 1773430692072,
+  "publicTokenFile": {
+    "path": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-team/openclaw-state/credentials/gateway-token-public.txt",
+    "len": 21,
+    "sha256_12": "705e109633bf"
+  },
+  "hostTokenMetaFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-public-host-inspection/public-host-token-meta.json",
+  "selectedNode": {
+    "displayName": "QuecPython Windows Lab Node",
+    "platform": "quectel",
+    "deviceFamily": "quecpython",
+    "connected": true
+  },
+  "commands": [
+    {
+      "command": "qpy.runtime.status",
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "command": "qpy.device.status",
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 18917,
+      "error": null
+    },
+    {
+      "command": "qpy.tools.catalog",
+      "status": "succeeded",
+      "result_code": "OK",
+      "duration_ms": 2,
+      "error": null
+    }
+  ],
+  "inference": {
+    "operatorProbeRecovered": true,
+    "correctOperatorTokenSource": "gateway.auth.token on public host",
+    "deviceLiveTokenIsOperatorToken": false,
+    "gatewayRemoteTokenExplicitlyConfigured": false
+  }
+}

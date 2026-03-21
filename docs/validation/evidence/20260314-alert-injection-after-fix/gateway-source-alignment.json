@@ -1,0 +1,40 @@
+{
+  "capturedAt": "2026-03-14T15:45:00+08:00",
+  "gatewaySourceFindings": {
+    "operatorCannotCallNodeEvent": {
+      "file": "lcc-team/openclaw/src/gateway/role-policy.test.ts",
+      "evidence": "operator role is unauthorized for method node.event"
+    },
+    "nodeEventIsNodeOnlyMethod": {
+      "file": "lcc-team/openclaw/src/gateway/method-scopes.ts",
+      "evidence": "node.event is classified as a node-role method"
+    },
+    "nodeEventHandlerDelegatesToServerNodeEvents": {
+      "file": "lcc-team/openclaw/src/gateway/server-methods/nodes.ts",
+      "evidence": "node.event request passes payload to handleNodeEvent()"
+    },
+    "supportedNodeEventConsumers": {
+      "file": "lcc-team/openclaw/src/gateway/server-node-events.ts",
+      "events": [
+        "voice.transcript",
+        "agent.request",
+        "notifications.changed",
+        "chat.subscribe",
+        "chat.unsubscribe",
+        "exec.started",
+        "exec.finished",
+        "exec.denied",
+        "push.apns.register"
+      ]
+    },
+    "unsupportedRawAlert": {
+      "file": "lcc-team/openclaw/src/gateway/server-node-events.ts",
+      "evidence": "no case for alert / heartbeat / telemetry / lifecycle"
+    }
+  },
+  "conclusion": {
+    "stockGatewayConsumesRawAlert": false,
+    "stockGatewayCompatibleBusinessUplink": "agent.request",
+    "operatorEventWindowIsNotAlertEvidence": true
+  }
+}

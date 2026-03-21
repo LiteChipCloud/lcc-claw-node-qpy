@@ -1,0 +1,40 @@
+{
+  "capturedAt": "2026-03-14T17:53:00+08:00",
+  "doctor": {
+    "sshKeyAuth": true
+  },
+  "capability": {
+    "agent_has_emit_business_alert": true,
+    "agent_has_queue_agent_request": true,
+    "transport_exists": true,
+    "transport_has_queue_business_alert": true,
+    "transport_has_queue_agent_request": true,
+    "transport_has_enqueue_request": true,
+    "agent_py_size": 4753,
+    "transport_py_size": 25116,
+    "last_error_code": "",
+    "last_outbox_error": "",
+    "ok": true,
+    "path": "/usr/qpy_runtime_capability_probe.py"
+  },
+  "burnin": {
+    "iterations": 2,
+    "runtimeAllOk": true,
+    "deviceAllOk": true,
+    "catalogAllOk": true,
+    "runtimeDurationsMs": [
+      768,
+      440
+    ],
+    "deviceDurationsMs": [
+      17523,
+      17156
+    ],
+    "catalogDurationsMs": [
+      470,
+      437
+    ],
+    "maxEventCount": 4
+  },
+  "goFor6hSoak": true
+}

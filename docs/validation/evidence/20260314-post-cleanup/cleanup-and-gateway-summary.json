@@ -1,0 +1,69 @@
+{
+  "capturedAtMs": 1773427523039,
+  "deviceCleanup": {
+    "preCleanup": {
+      "ok": true,
+      "policy": "REPORT_ONLY_DEFAULT",
+      "apply": false,
+      "port": "COM6",
+      "baud": 115200,
+      "paths": [
+        "/usr/app",
+        "/usr/app/tools"
+      ],
+      "include_rollback": false,
+      "summary": {
+        "total_temp_entries": 0,
+        "delete_candidates": 0,
+        "skipped": 0,
+        "deleted": 0,
+        "delete_failed": 0
+      },
+      "scan_errors": [],
+      "entries": []
+    },
+    "applyCleanup": {
+      "ok": true,
+      "policy": "REPORT_ONLY_DEFAULT",
+      "apply": true,
+      "port": "COM6",
+      "baud": 115200,
+      "paths": [
+        "/usr/app",
+        "/usr/app/tools"
+      ],
+      "include_rollback": false,
+      "summary": {
+        "total_temp_entries": 0,
+        "delete_candidates": 0,
+        "skipped": 0,
+        "deleted": 0,
+        "delete_failed": 0
+      },
+      "scan_errors": [],
+      "entries": []
+    }
+  },
+  "deviceRecovery": {
+    "runtimeOnline": true,
+    "protocol": 3,
+    "logicalDeviceId": "qpy-win-lab-01",
+    "lastExecStatus": "succeeded",
+    "lastExecResultCode": "OK",
+    "connectSuccesses": 1,
+    "reconnectCount": 0,
+    "lastCmdTool": "qpy.tools.catalog"
+  },
+  "publicGatewayCheck": {
+    "ok": false,
+    "exitCode": 1,
+    "errorCode": "AUTH_TOKEN_MISMATCH",
+    "message": "gateway_soak_probe error: gateway connect failed: {\"code\": \"INVALID_REQUEST\", \"message\": \"unauthorized: gateway token mismatch (set gateway.remote.token to match gateway.auth.token)\", \"details\": {\"code\": \"AUTH_TOKEN_MISMATCH\", \"authReason\": \"token_mismatch\"}}"
+  },
+  "gate": {
+    "cleanupApplyPathVerified": true,
+    "deviceOnline": true,
+    "publicGatewayOperatorRecheck": "BLOCKED",
+    "blockingReason": "AUTH_TOKEN_MISMATCH"
+  }
+}

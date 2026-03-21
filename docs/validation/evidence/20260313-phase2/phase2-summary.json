@@ -1,0 +1,114 @@
+{
+  "captured_at": "2026-03-13T19:06:30+08:00",
+  "scope": "72h soak formal runner short-window and restart recovery recheck",
+  "environment": {
+    "gateway_host": "masked:remote-linux-gateway",
+    "gateway_version": "2026.3.2",
+    "gateway_process": {
+      "active": true,
+      "restart_performed": true,
+      "pid_after_restart": 86354,
+      "active_enter_timestamp": "2026-03-13T19:00:49+08:00"
+    },
+    "remote_signer_http": {
+      "active": true,
+      "process_observed": true
+    },
+    "selected_node_before_restart": {
+      "display_name": "QuecPython Windows Lab Node",
+      "platform": "quectel",
+      "device_family": "quecpython",
+      "version": "v1.0.0-test",
+      "connected": true,
+      "paired": true
+    }
+  },
+  "formal_soak_window": {
+    "runner": "tools/gateway_soak_probe.py soak",
+    "started_at": "2026-03-13T18:54:24+08:00",
+    "finished_at": "2026-03-13T18:58:24+08:00",
+    "planned_samples": 2,
+    "completed_samples": 1,
+    "result": "failed_on_first_sample",
+    "command_probe": {
+      "qpy.runtime.status": {
+        "ok": false,
+        "duration_ms": 30003,
+        "error_code": "TIMEOUT"
+      },
+      "qpy.device.status": {
+        "ok": false,
+        "duration_ms": 30006,
+        "error_code": "TIMEOUT"
+      },
+      "qpy.tools.catalog": {
+        "ok": false,
+        "duration_ms": 30004,
+        "error_code": "TIMEOUT"
+      }
+    },
+    "event_observation": {
+      "window_sec": 95,
+      "operator_visible_events": [
+        "connect.challenge",
+        "health",
+        "tick"
+      ],
+      "node_event_visible_to_operator": false
+    }
+  },
+  "post_failure_transition": {
+    "runtime_status_60000ms_probe": {
+      "ok": false,
+      "error_code": "NOT_CONNECTED"
+    },
+    "node_list_after_restart": {
+      "node_present": true,
+      "connected": false,
+      "version_present": false,
+      "device_family_present": false
+    }
+  },
+  "restart_recovery_recheck": {
+    "restart_at": "2026-03-13T19:00:49+08:00",
+    "recovery_runner": "tools/gateway_soak_probe.py recovery-check",
+    "deadline_sec": 30,
+    "poll_sec": 5,
+    "elapsed_ms": 30033,
+    "target_ms": 30000,
+    "target_met": false,
+    "attempts": 6,
+    "failure_mode": "no connected QuecPython node returned within the 30s gate"
+  },
+  "gateway_journal_observations": [
+    {
+      "timestamp": "2026-03-13T18:54:54+08:00",
+      "observation": "Gateway logged qpy runtime invoke timeout at about 30003ms."
+    },
+    {
+      "timestamp": "2026-03-13T18:55:24+08:00",
+      "observation": "Gateway logged qpy device status invoke timeout at about 30002ms."
+    },
+    {
+      "timestamp": "2026-03-13T18:55:54+08:00",
+      "observation": "Gateway logged qpy tools catalog invoke timeout at about 30002ms."
+    },
+    {
+      "timestamp": "2026-03-13T19:00:27+08:00",
+      "observation": "Gateway node wake reported connected=false for qpy.runtime.status."
+    },
+    {
+      "timestamp": "2026-03-13T19:05:12+08:00",
+      "observation": "After restart, Gateway still reported connected=false and returned node not connected."
+    }
+  ],
+  "stage_decision": {
+    "verdict": "NO-GO",
+    "reason": "The first formal soak sample regressed from Phase 1 into full command timeout, and the node stayed disconnected across the restart recovery recheck.",
+    "next_actions": [
+      "Do not open the 72h formal window until the connected-but-unresponsive failure mode is root-caused.",
+      "Capture device-side evidence for why the node stopped answering qpy.* while still listed as paired.",
+      "Re-run restart recovery only after the node returns to stable connected state and qpy.runtime.status succeeds again."
+    ]
+  }
+}

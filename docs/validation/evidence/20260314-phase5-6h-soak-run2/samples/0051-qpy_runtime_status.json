@@ -1,0 +1,18 @@
+{
+  "sampleIndex": 51,
+  "startedAt": "2026-03-14T21:18:56+08:00",
+  "finishedAt": "2026-03-14T21:18:56+08:00",
+  "requestedCommands": [
+    "qpy.runtime.status"
+  ],
+  "ok": false,
+  "eventWindowSec": 95.0,
+  "selectedNode": null,
+  "error": {
+    "type": "WsError",
+    "message": "no node matched the requested filters"
+  },
+  "commandResults": [],
+  "eventCount": 0,
+  "events": []
+}

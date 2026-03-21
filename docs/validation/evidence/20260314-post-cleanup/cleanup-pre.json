@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "policy": "REPORT_ONLY_DEFAULT",
+  "apply": false,
+  "port": "COM6",
+  "baud": 115200,
+  "paths": [
+    "/usr/app",
+    "/usr/app/tools"
+  ],
+  "include_rollback": false,
+  "summary": {
+    "total_temp_entries": 0,
+    "delete_candidates": 0,
+    "skipped": 0,
+    "deleted": 0,
+    "delete_failed": 0
+  },
+  "scan_errors": [],
+  "entries": []
+}

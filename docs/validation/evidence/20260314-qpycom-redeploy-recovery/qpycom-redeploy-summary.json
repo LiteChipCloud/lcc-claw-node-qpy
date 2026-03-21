@@ -1,0 +1,72 @@
+{
+  "mode": "node-invoke",
+  "connectedAtMs": 1773504309604,
+  "commands": [
+    {
+      "command": "qpy.runtime.status",
+      "duration_ms": 2,
+      "result_code": "OK"
+    },
+    {
+      "command": "qpy.device.status",
+      "duration_ms": 21739,
+      "result_code": "OK"
+    },
+    {
+      "command": "qpy.tools.catalog",
+      "duration_ms": 1,
+      "result_code": "OK"
+    }
+  ],
+  "runtime_status": {
+    "online": true,
+    "connect_attempts": 1,
+    "connect_successes": 1,
+    "reconnect_count": 0,
+    "consecutive_failures": 0,
+    "last_error_code": "",
+    "last_cmd_tool": "qpy.runtime.status",
+    "outbox_depth": 0,
+    "result_cache_depth": 0
+  },
+  "device_status": {
+    "duration_ms": 21739,
+    "top_level_keys": [
+      "cell",
+      "data_context",
+      "device_id",
+      "firmware_version",
+      "imei",
+      "modem",
+      "module_model",
+      "network",
+      "node_id",
+      "operator",
+      "probe_duration_ms",
+      "probe_timings_ms",
+      "recommendations",
+      "registration",
+      "runtime",
+      "signal",
+      "sim",
+      "sim_inserted",
+      "sim_ready",
+      "ts"
+    ],
+    "runtime": {
+      "last_probe_tool": "qpy.runtime.status",
+      "last_probe_duration_ms": 2,
+      "last_probe_timings": {},
+      "last_cmd_tool": "qpy.device.status",
+      "last_exec_status": "succeeded",
+      "connect_attempts": 1,
+      "reconnect_count": 0,
+      "consecutive_failures": 0,
+      "online": true
+    }
+  },
+  "tools_catalog": {
+    "tool_count": 7,
+    "duration_ms": 1
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "sampleIndex": 27,
+  "startedAt": "2026-03-14T19:45:08+08:00",
+  "finishedAt": "2026-03-14T19:45:38+08:00",
+  "requestedCommands": [
+    "qpy.device.status"
+  ],
+  "ok": false,
+  "eventWindowSec": 0.0,
+  "selectedNode": {
+    "nodeId": "masked:354a779c25",
+    "displayName": "QuecPython Windows Lab Node",
+    "platform": "quectel",
+    "version": "v1.0.0-test",
+    "deviceFamily": "quecpython",
+    "caps": [
+      "diagnostics",
+      "network",
+      "telemetry"
+    ],
+    "commands": [
+      "qpy.cell.info",
+      "qpy.device.info",
+      "qpy.device.status",
+      "qpy.net.diag",
+      "qpy.runtime.status",
+      "qpy.sim.info",
+      "qpy.tools.catalog",
+      "tool_device_info",
+      "tool_net_diag"
+    ],
+    "paired": true,
+    "connected": true,
+    "connectedAtMs": 1773479922155,
+    "remoteIp": "masked:7f1a54378a"
+  },
+  "error": null,
+  "commandResults": [
+    {
+      "command": "qpy.device.status",
+      "ok": false,
+      "startedAtMs": 1773488708204,
+      "finishedAtMs": 1773488738215,
+      "durationMs": 30011,
+      "error": {
+        "type": "WsError",
+        "message": "node.invoke failed for qpy.device.status: {\"code\": \"UNAVAILABLE\", \"message\": \"TIMEOUT: node invoke timed out\", \"details\": {\"nodeError\": {\"code\": \"TIMEOUT\", \"message\": \"node invoke timed out\"}}}"
+      }
+    }
+  ],
+  "eventCount": 4,
+  "events": [
+    {
+      "type": "event",
+      "event": "connect.challenge",
+      "inner_event": null,
+      "payload_keys": [
+        "nonce",
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "health",
+      "inner_event": null,
+      "payload_keys": [
+        "agents",
+        "channelLabels",
+        "channelOrder",
+        "channels",
+        "defaultAgentId",
+        "durationMs",
+        "heartbeatSeconds",
+        "ok",
+        "sessions",
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "tick",
+      "inner_event": null,
+      "payload_keys": [
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "health",
+      "inner_event": null,
+      "payload_keys": [
+        "agents",
+        "channelLabels",
+        "channelOrder",
+        "channels",
+        "defaultAgentId",
+        "durationMs",
+        "heartbeatSeconds",
+        "ok",
+        "sessions",
+        "ts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "startedAt": "20260314T175340",
+  "pid": 45625,
+  "logFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak/soak-6h-20260314T175340.log",
+  "pidFile": "/Volumes/M2T/LiteChipTech/business/lcc-system/lcc-projects/opensource/lcc-claw-node-qpy/docs/validation/evidence/20260314-phase5-6h-soak/soak-6h-20260314T175340.pid",
+  "durationSec": 21600,
+  "runtimeIntervalSec": 300,
+  "deviceIntervalSec": 900,
+  "catalogIntervalSec": 1800,
+  "eventWindowSec": 95,
+  "invokeTimeoutMs": 30000,
+  "nodePlatform": "quectel",
+  "nodeFamily": "quecpython"
+}

@@ -1,0 +1,40 @@
+Mar 14 03:59:27 hcss-ecs-8836 node[86354]: 2026-03-13T19:59:27.772Z [gateway] received SIGTERM; shutting down
+Mar 14 03:59:27 hcss-ecs-8836 node[86354]: 2026-03-13T19:59:27.813Z [gmail-watcher] gmail watcher stopped
+Mar 14 03:59:27 hcss-ecs-8836 systemd[1119]: Stopped openclaw-gateway.service - OpenClaw Gateway (v2026.3.2).
+Mar 14 03:59:27 hcss-ecs-8836 systemd[1119]: openclaw-gateway.service: Consumed 41.073s CPU time, 426.5M memory peak, 0B memory swap peak.
+Mar 14 03:59:27 hcss-ecs-8836 systemd[1119]: Started openclaw-gateway.service - OpenClaw Gateway (v2026.3.2).
+Mar 14 03:59:30 hcss-ecs-8836 node[114535]: (node:114535) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Mar 14 03:59:30 hcss-ecs-8836 node[114535]: (Use `node --trace-deprecation ...` to show where the warning was created)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.334+08:00 XiaoYi: register() called - START
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.344+08:00 XiaoYi: Creating NEW runtime instance (global storage)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.346+08:00 XiaoYi: Created new runtime instance: runtime_1773431974345_uwue73z05
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.350+08:00 XiaoYi: [runtime_1773431974345_uwue73z05] Setting PluginRuntime
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.352+08:00 XiaoYi: setXiaoYiRuntime() completed
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.354+08:00 XiaoYi: Reusing EXISTING runtime instance: runtime_1773431974345_uwue73z05
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.356+08:00 XiaoYi: Got runtime instance: runtime_1773431974345_uwue73z05, isConnected: false
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.360+08:00 XiaoYi: About to call registerChannel()
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.362+08:00 XiaoYi: registerChannel() completed
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-14T03:59:34.364+08:00 XiaoYi channel plugin registered - END
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.369Z [gateway] [plugins] plugin id mismatch (config uses "wecom-openclaw-plugin", export uses "wecom") (plugin=wecom-openclaw-plugin, source=/home/openclaw/.openclaw/extensions/wecom-openclaw-plugin/dist/index.esm.js)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.371Z [gateway] [plugins] memory slot plugin not found or not marked as memory: memory-core
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.384Z [canvas] host mounted at http://0.0.0.0:18789/__openclaw__/canvas/ (root /home/openclaw/.openclaw/canvas)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.386Z [gateway] ⚠️  Gateway is binding to a non-loopback address. Ensure authentication is configured before exposing to public networks.
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.440Z [heartbeat] started
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.449Z [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.454Z [gateway] agent model: dashscope/qwen3.5-plus
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.455Z [gateway] listening on ws://0.0.0.0:18789 (PID 114535)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.458Z [gateway] log file: /tmp/openclaw/openclaw-2026-03-14.log
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.489Z [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+Mar 14 03:59:34 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:34.753Z [discord] [default] starting provider
+Mar 14 03:59:35 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:35.013Z [discord] [default] channel exited: Failed to resolve Discord application id
+Mar 14 03:59:35 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:35.015Z [discord] [default] auto-restart attempt 1/10 in 5s
+Mar 14 03:59:39 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:39.269Z [ws] ⇄ res ✓ node.invoke 246ms conn=c09f1253…4983 id=node_invoke-0003
+Mar 14 03:59:39 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:39.859Z [ws] ⇄ res ✓ node.invoke 466ms conn=40f24fb4…04f5 id=node_invoke-0003
+Mar 14 03:59:40 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:40.411Z [discord] [default] starting provider
+Mar 14 03:59:40 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:40.666Z [discord] [default] channel exited: Failed to resolve Discord application id
+Mar 14 03:59:40 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:40.668Z [discord] [default] auto-restart attempt 2/10 in 11s
+Mar 14 03:59:51 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:51.862Z [discord] [default] starting provider
+Mar 14 03:59:52 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:52.118Z [discord] [default] channel exited: Failed to resolve Discord application id
+Mar 14 03:59:52 hcss-ecs-8836 node[114535]: 2026-03-13T19:59:52.120Z [discord] [default] auto-restart attempt 3/10 in 22s
+Mar 14 04:00:00 hcss-ecs-8836 node[114535]: 2026-03-13T20:00:00.275Z [ws] ⇄ res ✓ node.invoke 17404ms conn=40f24fb4…04f5 id=node_invoke-0004
+Mar 14 04:00:03 hcss-ecs-8836 node[114535]: 2026-03-13T20:00:03.594Z [ws] ⇄ res ✓ node.invoke 305ms conn=40f24fb4…04f5 id=node_invoke-0005

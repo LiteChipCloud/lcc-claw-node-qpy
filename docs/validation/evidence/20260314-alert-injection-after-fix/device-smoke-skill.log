@@ -1,0 +1,33 @@
+QuecPython device smoke results
+Generated: 2026-03-14T06:57:12
+
+[PASS] Execution policy (POLICY)
+safe mode: disable QPYcom operations, disable deploy/import checks, and disable QPYcom process kill.
+
+[PASS] Auto port detection (PORT_DISCOVERY)
+Detected serial ports:
+- COM4: COM4
+- COM5: COM5
+- COM6: COM6
+- COM7: COM7
+
+[FAIL] AT probe (AT)
+ERR: Exception calling "Open" with "0" argument(s): "A device attached to the system is not functioning.
+"
+
+[FAIL] REPL probe (REPL)
+ERR: Exception calling "Open" with "0" argument(s): "A device attached to the system is not functioning.
+"
+
+[FAIL] REPL env snapshot (REPL)
+ERR: Exception calling "Open" with "0" argument(s): "A device attached to the system is not functioning.
+"
+
+[PASS] QPYcom policy gate (POLICY)
+QPYcom backend not required in this run.
+
+[FAIL] REPL ls /usr (REPL)
+ERR: Exception calling "Open" with "0" argument(s): "A device attached to the system is not functioning.
+"
+
+Summary: 3 passed, 4 failed

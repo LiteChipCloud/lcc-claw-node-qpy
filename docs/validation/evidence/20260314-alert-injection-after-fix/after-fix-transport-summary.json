@@ -1,0 +1,197 @@
+{
+  "capturedAt": "2026-03-14T22:00:00+08:00",
+  "windowsSerial": {
+    "openWithoutDtrFile": "docs/validation/evidence/20260314-alert-injection-after-fix/windows-com6-open-no-dtr.txt",
+    "openWithDtrFile": "docs/validation/evidence/20260314-alert-injection-after-fix/windows-com6-open-with-dtr.txt",
+    "replEchoProbeFile": "docs/validation/evidence/20260314-alert-injection-after-fix/windows-repl-echo-probe.txt",
+    "preAlertSnapshotFile": "docs/validation/evidence/20260314-alert-injection-after-fix/pre-alert-snapshot.txt"
+  },
+  "windowsSkillDiagnostics": {
+    "deviceSmokeJsonFile": "docs/validation/evidence/20260314-alert-injection-after-fix/device-smoke-skill.json",
+    "deviceSmokeLogFile": "docs/validation/evidence/20260314-alert-injection-after-fix/device-smoke-skill.log",
+    "deviceInfoProbeFile": "docs/validation/evidence/20260314-alert-injection-after-fix/device-info-probe-skill.json",
+    "deviceFsLsFile": "docs/validation/evidence/20260314-alert-injection-after-fix/device-fs-skill-ls.json",
+    "summary": {
+      "device_smoke": {
+        "at_probe_ok": false,
+        "repl_probe_ok": false,
+        "repl_ls_usr_ok": false,
+        "raw_error": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\""
+      },
+      "device_info_probe": {
+        "ok": false,
+        "error": "AT batch failed: ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\""
+      },
+      "device_fs_cli": {
+        "ok": false,
+        "backend": "repl",
+        "path": "/usr",
+        "raw_error": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\""
+      }
+    }
+  },
+  "runtimeProbe1": {
+    "last_close_ms": 618541,
+    "last_exec_status": "succeeded",
+    "inflight_cmd_tool": "qpy.device.status",
+    "result_cache_depth": 3,
+    "protocol": 3,
+    "last_signer": {
+      "logical_device_id": "masked:2d532581bc",
+      "url": "http://124.70.221.88:8787/sign",
+      "signed_at": 1773440285983
+    },
+    "last_tick_ms": 1920036,
+    "last_disconnect_ms": 618541,
+    "tool_exec_started_ms": 1913935,
+    "device_token_cached": "masked:3cbc87c768",
+    "last_cmd_id": "4299af48-01eb-46e6-923d-6316c5163527",
+    "sent_frames": 106,
+    "last_outbox_error": "",
+    "last_event": "health",
+    "last_exec_result_code": "OK",
+    "last_cmd_ms": 1913941,
+    "received_frames": 183,
+    "last_outbox_error_ms": 0,
+    "connect_successes": 1,
+    "boot_ms": 618533,
+    "worker_busy": true,
+    "last_event_ms": 1914284,
+    "logical_device_id": "masked:2d532581bc",
+    "node_id": "masked:354a779c25",
+    "last_error": "",
+    "tool_exec_finished_ms": 0,
+    "worker_available": true,
+    "last_error_ms": 0,
+    "last_ack_ms": 1909160,
+    "pending_cmds": 0,
+    "inflight_cmd_id": "4299af48-01eb-46e6-923d-6316c5163527",
+    "last_close_reason": "reconnect",
+    "reconnect_count": 0,
+    "last_connect_ms": 619360,
+    "last_error_code": "",
+    "last_cmd_tool": "qpy.device.status",
+    "consecutive_failures": 0,
+    "gateway": {
+      "device_auth_mode": "remote_signer_http",
+      "role": "node",
+      "url": "ws://124.70.221.88:18789",
+      "heartbeat_interval_sec": 15,
+      "telemetry_interval_sec": 90
+    },
+    "online": true,
+    "safe_mode": false,
+    "outbox_depth": 0,
+    "boot_wall_ms": 622000,
+    "connect_attempts": 1
+  },
+  "runtimeProbe2": {
+    "last_close_ms": 618541,
+    "last_exec_status": "succeeded",
+    "inflight_cmd_tool": "qpy.device.status",
+    "result_cache_depth": 4,
+    "protocol": 3,
+    "last_signer": {
+      "logical_device_id": "masked:2d532581bc",
+      "url": "http://124.70.221.88:8787/sign",
+      "signed_at": 1773440285983
+    },
+    "last_tick_ms": 2002791,
+    "last_disconnect_ms": 618541,
+    "tool_exec_started_ms": 1995365,
+    "device_token_cached": "masked:3cbc87c768",
+    "last_cmd_id": "0a890a62-57f5-4ede-be04-515ea9257fe6",
+    "sent_frames": 114,
+    "last_outbox_error": "",
+    "last_event": "health",
+    "last_exec_result_code": "OK",
+    "last_cmd_ms": 1995485,
+    "received_frames": 197,
+    "last_outbox_error_ms": 0,
+    "connect_successes": 1,
+    "boot_ms": 618533,
+    "worker_busy": true,
+    "last_event_ms": 1995482,
+    "logical_device_id": "masked:2d532581bc",
+    "node_id": "masked:354a779c25",
+    "last_error": "",
+    "tool_exec_finished_ms": 0,
+    "worker_available": true,
+    "last_error_ms": 0,
+    "last_ack_ms": 1999750,
+    "pending_cmds": 0,
+    "inflight_cmd_id": "0a890a62-57f5-4ede-be04-515ea9257fe6",
+    "last_close_reason": "reconnect",
+    "reconnect_count": 0,
+    "last_connect_ms": 619360,
+    "last_error_code": "",
+    "last_cmd_tool": "qpy.device.status",
+    "consecutive_failures": 0,
+    "gateway": {
+      "device_auth_mode": "remote_signer_http",
+      "role": "node",
+      "url": "ws://124.70.221.88:18789",
+      "heartbeat_interval_sec": 15,
+      "telemetry_interval_sec": 90
+    },
+    "online": true,
+    "safe_mode": false,
+    "outbox_depth": 0,
+    "boot_wall_ms": 622000,
+    "connect_attempts": 1
+  },
+  "runtimeDelta": {
+    "sent_frames": 8,
+    "received_frames": 14,
+    "result_cache_depth": 1,
+    "last_ack_ms_advanced": true
+  },
+  "operatorWindowAfterFix": {
+    "events": [
+      {
+        "type": "event",
+        "event": "connect.challenge",
+        "inner_event": null,
+        "payload_keys": [
+          "nonce",
+          "ts"
+        ]
+      },
+      {
+        "type": "event",
+        "event": "health",
+        "inner_event": null,
+        "payload_keys": [
+          "agents",
+          "channelLabels",
+          "channelOrder",
+          "channels",
+          "defaultAgentId",
+          "durationMs",
+          "heartbeatSeconds",
+          "ok",
+          "sessions",
+          "ts"
+        ]
+      },
+      {
+        "type": "event",
+        "event": "tick",
+        "inner_event": null,
+        "payload_keys": [
+          "ts"
+        ]
+      }
+    ],
+    "sawNodeEvent": false,
+    "sawAlert": false
+  },
+  "conclusion": {
+    "transportOutboxHealthyAfterFix": true,
+    "runtimeCountersStillAdvancing": true,
+    "operatorStillCannotObserveNodeEvent": true,
+    "windowsReplCurrentlySilent": true,
+    "skillToolsAlsoReproduceOpenFailure": true,
+    "currentBlocker": "transport pop-from-empty-list path appears fixed; current blockers are operator observability and the newly observed silent REPL after power cycle, which is also reproduced by the official quecpython-dev skill tools"
+  }
+}

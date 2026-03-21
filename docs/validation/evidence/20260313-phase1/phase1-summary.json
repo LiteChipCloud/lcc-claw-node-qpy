@@ -1,0 +1,163 @@
+{
+  "captured_at": "2026-03-13T06:00:01+08:00",
+  "scope": "72h soak preflight and first burn-in",
+  "environment": {
+    "gateway_host": "masked:remote-linux-gateway",
+    "gateway_process": {
+      "active": true,
+      "restart_validated": true
+    },
+    "remote_signer_http": {
+      "active": true,
+      "path_observed": true
+    },
+    "gateway_allow_commands": [
+      "qpy.device.info",
+      "qpy.device.status",
+      "qpy.net.diag",
+      "qpy.sim.info",
+      "qpy.cell.info",
+      "qpy.runtime.status",
+      "qpy.tools.catalog",
+      "tool_device_info",
+      "tool_net_diag"
+    ],
+    "selected_node": {
+      "platform": "quectel",
+      "device_family": "quecpython",
+      "display_name": "QuecPython Windows Lab Node",
+      "version": "v1.0.0-test",
+      "connected": true,
+      "paired": true,
+      "caps": [
+        "diagnostics",
+        "network",
+        "telemetry"
+      ],
+      "commands": [
+        "qpy.cell.info",
+        "qpy.device.info",
+        "qpy.device.status",
+        "qpy.net.diag",
+        "qpy.runtime.status",
+        "qpy.sim.info",
+        "qpy.tools.catalog",
+        "tool_device_info",
+        "tool_net_diag"
+      ]
+    }
+  },
+  "command_probe": {
+    "qpy.runtime.status": {
+      "ok": true,
+      "duration_ms": 322,
+      "summary": {
+        "online": true,
+        "connect_attempts": 58,
+        "connect_successes": 3,
+        "reconnect_count": 2,
+        "consecutive_failures": 0,
+        "pending_cmds": 1,
+        "outbox_depth": 0,
+        "result_cache_depth": 4,
+        "device_token_cached": true,
+        "last_event": "node.invoke.request",
+        "last_cmd_tool": "qpy.runtime.status",
+        "last_error_code": "CONNECT_FAILED",
+        "last_signer_present": true,
+        "device_auth_mode": "remote_signer_http",
+        "heartbeat_interval_sec": 15,
+        "telemetry_interval_sec": 90
+      }
+    },
+    "qpy.device.status": {
+      "ok": true,
+      "duration_ms": 20854,
+      "threshold_ms": 15000,
+      "threshold_breached": true,
+      "summary": {
+        "registration_registered": true,
+        "data_context_available": true,
+        "sim_ready": true,
+        "network_registered": true,
+        "network_ready_state": 1,
+        "module_model": "EC800K",
+        "firmware_version_present": true,
+        "recommendations_count": 1,
+        "runtime_online": true,
+        "runtime_reconnect_count": 2,
+        "runtime_last_signer_present": true
+      }
+    },
+    "qpy.tools.catalog": {
+      "ok": true,
+      "duration_ms": 140,
+      "tool_count": 7,
+      "tools": [
+        "qpy.cell.info",
+        "qpy.device.info",
+        "qpy.device.status",
+        "qpy.net.diag",
+        "qpy.runtime.status",
+        "qpy.sim.info",
+        "qpy.tools.catalog"
+      ]
+    }
+  },
+  "event_observation": {
+    "window_sec": 95,
+    "operator_visible_events": [
+      "connect.challenge",
+      "health",
+      "tick"
+    ],
+    "node_event_visible_to_operator": false,
+    "interpretation": "Generic operator sessions do not expose device-side node.event frames by default, so heartbeat/telemetry/lifecycle cannot be proven from operator subscription alone."
+  },
+  "gateway_restart_recovery": {
+    "gateway_pid_before": 36199,
+    "gateway_pid_after": 45852,
+    "recovery_poll_started_at": "2026-03-13T05:59:25+08:00",
+    "successful_runtime_status_elapsed_ms": 35162,
+    "target_ms": 30000,
+    "target_met": false,
+    "runtime_delta_after_restart": {
+      "connect_attempts_delta": 2,
+      "connect_successes_delta": 1,
+      "reconnect_count_delta": 1,
+      "last_signer_present": true
+    },
+    "notes": [
+      "The first recovery poll attempt returned node.invoke timeout before the next poll succeeded.",
+      "A successful qpy.runtime.status was observed, but not within the <=30s gate."
+    ]
+  },
+  "gateway_journal_observations": [
+    {
+      "timestamp": "2026-03-13T05:53:11+08:00",
+      "observation": "Gateway logged node.invoke timeout after a 15004ms qpy command window."
+    },
+    {
+      "timestamp": "2026-03-13T05:54:06+08:00",
+      "observation": "Gateway logged successful qpy.device.status invoke after 20854ms."
+    },
+    {
+      "timestamp": "2026-03-13T05:54:07+08:00",
+      "observation": "Gateway logged successful qpy.tools.catalog invoke after 140ms."
+    }
+  ],
+  "coverage_gaps": [
+    "Alert path was not directly triggered in phase 1.",
+    "Device-side node.event frames were not directly observable from the operator session.",
+    "No serial/REPL capture was available because the current Windows host reported zero serial ports."
+  ],
+  "stage_decision": {
+    "verdict": "NO-GO",
+    "reason": "Preflight passed for connectivity and command coverage, but qpy.device.status exceeds the current timeout budget and restart recovery evidence is above the <=30s gate.",
+    "next_actions": [
+      "Raise soak invoke timeout to >=30s and capture per-command latency distribution.",
+      "Add a gateway-side evidence sink for node.event or device-side log forwarding so heartbeat/telemetry/lifecycle/alert can be directly observed.",
+      "Repeat restart recovery after timeout tuning and confirm successful runtime probe within <=30s."
+    ]
+  }
+}

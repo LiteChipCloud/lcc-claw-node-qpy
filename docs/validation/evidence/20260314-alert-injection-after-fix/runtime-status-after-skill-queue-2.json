@@ -1,0 +1,438 @@
+{
+  "mode": "node-invoke",
+  "connectedAtMs": 1773471996961,
+  "hello": {
+    "type": "hello-ok",
+    "protocol": 3,
+    "server": {
+      "version": "2026.3.2",
+      "connId": "0da5fa43-b06d-4817-a11c-eb68638ef4ad"
+    },
+    "features": {
+      "methods": [
+        "health",
+        "doctor.memory.status",
+        "logs.tail",
+        "channels.status",
+        "channels.logout",
+        "status",
+        "usage.status",
+        "usage.cost",
+        "tts.status",
+        "tts.providers",
+        "tts.enable",
+        "tts.disable",
+        "tts.convert",
+        "tts.setProvider",
+        "config.get",
+        "config.set",
+        "config.apply",
+        "config.patch",
+        "config.schema",
+        "exec.approvals.get",
+        "exec.approvals.set",
+        "exec.approvals.node.get",
+        "exec.approvals.node.set",
+        "exec.approval.request",
+        "exec.approval.waitDecision",
+        "exec.approval.resolve",
+        "wizard.start",
+        "wizard.next",
+        "wizard.cancel",
+        "wizard.status",
+        "talk.config",
+        "talk.mode",
+        "models.list",
+        "tools.catalog",
+        "agents.list",
+        "agents.create",
+        "agents.update",
+        "agents.delete",
+        "agents.files.list",
+        "agents.files.get",
+        "agents.files.set",
+        "skills.status",
+        "skills.bins",
+        "skills.install",
+        "skills.update",
+        "update.run",
+        "voicewake.get",
+        "voicewake.set",
+        "secrets.reload",
+        "secrets.resolve",
+        "sessions.list",
+        "sessions.preview",
+        "sessions.patch",
+        "sessions.reset",
+        "sessions.delete",
+        "sessions.compact",
+        "last-heartbeat",
+        "set-heartbeats",
+        "wake",
+        "node.pair.request",
+        "node.pair.list",
+        "node.pair.approve",
+        "node.pair.reject",
+        "node.pair.verify",
+        "device.pair.list",
+        "device.pair.approve",
+        "device.pair.reject",
+        "device.pair.remove",
+        "device.token.rotate",
+        "device.token.revoke",
+        "node.rename",
+        "node.list",
+        "node.describe",
+        "node.invoke",
+        "node.invoke.result",
+        "node.event",
+        "node.canvas.capability.refresh",
+        "cron.list",
+        "cron.status",
+        "cron.add",
+        "cron.update",
+        "cron.remove",
+        "cron.run",
+        "cron.runs",
+        "system-presence",
+        "system-event",
+        "send",
+        "agent",
+        "agent.identity.get",
+        "agent.wait",
+        "browser.request",
+        "chat.history",
+        "chat.abort",
+        "chat.send"
+      ],
+      "events": [
+        "connect.challenge",
+        "agent",
+        "chat",
+        "presence",
+        "tick",
+        "talk.mode",
+        "shutdown",
+        "health",
+        "heartbeat",
+        "cron",
+        "node.pair.requested",
+        "node.pair.resolved",
+        "node.invoke.request",
+        "device.pair.requested",
+        "device.pair.resolved",
+        "voicewake.changed",
+        "exec.approval.requested",
+        "exec.approval.resolved",
+        "update.available"
+      ]
+    },
+    "snapshot": {
+      "presence": [
+        {
+          "host": "hcss-ecs-8836",
+          "ip": "masked:f0c5ed8077",
+          "version": "2026.3.2",
+          "platform": "linux 6.8.0-101-generic",
+          "deviceFamily": "Linux",
+          "modelIdentifier": "x64",
+          "mode": "gateway",
+          "reason": "self",
+          "text": "Gateway: hcss-ecs-8836 (172.31.13.150) · app 2026.3.2 · mode gateway · reason self",
+          "ts": 1773471978116
+        }
+      ],
+      "health": {
+        "ok": true,
+        "ts": 1773471937352,
+        "durationMs": 253,
+        "channels": {
+          "discord": {
+            "configured": true,
+            "running": false,
+            "lastStartAt": null,
+            "lastStopAt": null,
+            "lastError": null,
+            "tokenSource": "masked:140bedbf9c",
+            "probe": {
+              "ok": false,
+              "status": null,
+              "error": "fetch failed",
+              "elapsedMs": 253
+            },
+            "lastProbeAt": 1773471937352,
+            "accountId": "default",
+            "accounts": {
+              "default": {
+                "configured": true,
+                "running": false,
+                "lastStartAt": null,
+                "lastStopAt": null,
+                "lastError": null,
+                "tokenSource": "masked:140bedbf9c",
+                "probe": {
+                  "ok": false,
+                  "status": null,
+                  "error": "fetch failed",
+                  "elapsedMs": 253
+                },
+                "lastProbeAt": 1773471937352,
+                "accountId": "default"
+              }
+            }
+          },
+          "qqbot": {
+            "configured": false,
+            "tokenSource": "masked:140bedbf9c",
+            "running": false,
+            "connected": false,
+            "lastConnectedAt": null,
+            "lastError": null,
+            "accountId": "default",
+            "accounts": {
+              "default": {
+                "configured": false,
+                "tokenSource": "masked:140bedbf9c",
+                "running": false,
+                "connected": false,
+                "lastConnectedAt": null,
+                "lastError": null,
+                "accountId": "default"
+              }
+            }
+          },
+          "feishu": {
+            "configured": false,
+            "running": false,
+            "lastStartAt": null,
+            "lastStopAt": null,
+            "lastError": null,
+            "port": null,
+            "lastProbeAt": null,
+            "accountId": "default",
+            "accounts": {
+              "default": {
+                "configured": false,
+                "running": false,
+                "lastStartAt": null,
+                "lastStopAt": null,
+                "lastError": null,
+                "port": null,
+                "lastProbeAt": null,
+                "accountId": "default"
+              }
+            }
+          },
+          "dingtalk": {
+            "configured": false,
+            "running": false,
+            "lastStartAt": null,
+            "lastStopAt": null,
+            "lastError": null,
+            "accountId": "default",
+            "accounts": {
+              "default": {
+                "configured": false,
+                "running": false,
+                "lastStartAt": null,
+                "lastStopAt": null,
+                "lastError": null,
+                "accountId": "default"
+              }
+            }
+          },
+          "wecom": {
+            "configured": false,
+            "running": false,
+            "lastStartAt": null,
+            "lastStopAt": null,
+            "lastError": null,
+            "accountId": "default",
+            "accounts": {
+              "default": {
+                "configured": false,
+                "running": false,
+                "lastStartAt": null,
+                "lastStopAt": null,
+                "lastError": null,
+                "accountId": "default"
+              }
+            }
+          },
+          "xiaoyi": {
+            "accountId": "default",
+            "configured": false,
+            "lastProbeAt": null,
+            "accounts": {
+              "default": {
+                "accountId": "default",
+                "configured": false,
+                "lastProbeAt": null
+              }
+            }
+          }
+        },
+        "channelOrder": [
+          "discord",
+          "qqbot",
+          "feishu",
+          "dingtalk",
+          "wecom",
+          "xiaoyi"
+        ],
+        "channelLabels": {
+          "discord": "Discord",
+          "qqbot": "QQ Bot",
+          "feishu": "Feishu",
+          "dingtalk": "DingTalk",
+          "wecom": "企业微信",
+          "xiaoyi": "XiaoYi"
+        },
+        "heartbeatSeconds": 1800,
+        "defaultAgentId": "main",
+        "agents": [
+          {
+            "agentId": "main",
+            "isDefault": true,
+            "heartbeat": {
+              "enabled": true,
+              "every": "30m",
+              "everyMs": 1800000,
+              "prompt": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.",
+              "target": "none",
+              "ackMaxChars": 300
+            },
+            "sessions": {
+              "path": "/home/openclaw/.openclaw/agents/main/sessions/sessions.json",
+              "count": 1,
+              "recent": [
+                {
+                  "key": "agent:main:main",
+                  "updatedAt": 1773337494246,
+                  "age": 134442853
+                }
+              ]
+            }
+          }
+        ],
+        "sessions": {
+          "path": "/home/openclaw/.openclaw/agents/main/sessions/sessions.json",
+          "count": 1,
+          "recent": [
+            {
+              "key": "agent:main:main",
+              "updatedAt": 1773337494246,
+              "age": 134442853
+            }
+          ]
+        }
+      },
+      "stateVersion": {
+        "presence": 8,
+        "health": 715
+      },
+      "uptimeMs": 40010223,
+      "configPath": "/home/openclaw/.openclaw/openclaw.json",
+      "stateDir": "/home/openclaw/.openclaw",
+      "sessionDefaults": {
+        "defaultAgentId": "main",
+        "mainKey": "main",
+        "mainSessionKey": "agent:main:main",
+        "scope": "per-sender"
+      },
+      "authMode": "token"
+    },
+    "canvasHostUrl": "http://124.70.221.88:18789",
+    "policy": {
+      "maxPayload": 26214400,
+      "maxBufferedBytes": 52428800,
+      "tickIntervalMs": 30000
+    }
+  },
+  "selectedNode": {
+    "nodeId": "masked:354a779c25",
+    "displayName": "QuecPython Windows Lab Node",
+    "platform": "quectel",
+    "version": "v1.0.0-test",
+    "deviceFamily": "quecpython",
+    "caps": [
+      "diagnostics",
+      "network",
+      "telemetry"
+    ],
+    "commands": [
+      "qpy.cell.info",
+      "qpy.device.info",
+      "qpy.device.status",
+      "qpy.net.diag",
+      "qpy.runtime.status",
+      "qpy.sim.info",
+      "qpy.tools.catalog",
+      "tool_device_info",
+      "tool_net_diag"
+    ],
+    "paired": true,
+    "connected": true,
+    "connectedAtMs": 1773468969804,
+    "remoteIp": "masked:7f1a54378a"
+  },
+  "results": [
+    {
+      "command": "qpy.runtime.status",
+      "summary": {
+        "online": true,
+        "connect_attempts": 1,
+        "connect_successes": 1,
+        "reconnect_count": 0,
+        "consecutive_failures": 0,
+        "last_error_code": "",
+        "last_event": "health",
+        "last_cmd_tool": "qpy.runtime.status",
+        "pending_cmds": 0,
+        "outbox_depth": 0,
+        "result_cache_depth": 3,
+        "device_token_cached": "masked:3cbc87c768",
+        "last_signer": {
+          "logical_device_id": "masked:2d532581bc",
+          "url": "http://124.70.221.88:8787/sign",
+          "signed_at": 1773468969645
+        },
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 1,
+        "tool": "qpy.runtime.status",
+        "requested_tool": "qpy.runtime.status",
+        "error": null
+      },
+      "eventCount": 2,
+      "events": [
+        {
+          "type": "event",
+          "event": "connect.challenge",
+          "inner_event": null,
+          "payload_keys": [
+            "nonce",
+            "ts"
+          ]
+        },
+        {
+          "type": "event",
+          "event": "health",
+          "inner_event": null,
+          "payload_keys": [
+            "agents",
+            "channelLabels",
+            "channelOrder",
+            "channels",
+            "defaultAgentId",
+            "durationMs",
+            "heartbeatSeconds",
+            "ok",
+            "sessions",
+            "ts"
+          ]
+        }
+      ]
+    }
+  ]
+}

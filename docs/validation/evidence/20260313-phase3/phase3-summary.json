@@ -1,0 +1,72 @@
+{
+  "capturedAtMs": 1773414832026,
+  "environment": {
+    "gatewayUrl": "ws://124.70.221.88:18789",
+    "deviceId": "qpy-win-lab-01",
+    "deviceDisplayName": "QuecPython Windows Lab Node",
+    "publicGatewayAuthDrift": true,
+    "publicGatewayAuthObservedValue": "<openclaw_auth_token>",
+    "windowsBundlePlaceholderConfigRisk": true
+  },
+  "deviceRecovery": {
+    "runtimeOnline": true,
+    "protocol": 3,
+    "connectSuccesses": 1,
+    "reconnectCount": 0,
+    "lastSignerPresent": true
+  },
+  "nodeState": {
+    "paired": true,
+    "connected": true,
+    "version": "v1.0.0-test",
+    "deviceFamily": "quecpython",
+    "caps": [
+      "diagnostics",
+      "network",
+      "telemetry"
+    ]
+  },
+  "burnin": {
+    "allPassed": true,
+    "commands": [
+      {
+        "command": "qpy.runtime.status",
+        "ok": true,
+        "durationMs": 461,
+        "toolResultCode": "OK",
+        "toolDurationMs": 2
+      },
+      {
+        "command": "qpy.device.status",
+        "ok": true,
+        "durationMs": 16880,
+        "toolResultCode": "OK",
+        "toolDurationMs": 16343
+      },
+      {
+        "command": "qpy.tools.catalog",
+        "ok": true,
+        "durationMs": 438,
+        "toolResultCode": "OK",
+        "toolDurationMs": 1
+      }
+    ],
+    "eventCount": 2,
+    "events": [
+      "connect.challenge",
+      "health"
+    ]
+  },
+  "probeFixesIncluded": [
+    "burnin_command_override_no_longer_duplicates_default_commands",
+    "tool_envelope_data_is_unwrapped_before_summary"
+  ],
+  "gate": {
+    "formal72h": "NO_GO",
+    "reasons": [
+      "public gateway auth token is drifting from local credential inventory",
+      "this round only proves short-window recovery and command round-trip, not a reopened 72h soak window",
+      "gateway restart recovery-check has not been re-run on the public environment after the recovery fix"
+    ]
+  }
+}

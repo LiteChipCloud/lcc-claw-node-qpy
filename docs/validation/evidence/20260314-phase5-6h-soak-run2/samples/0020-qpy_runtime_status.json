@@ -1,0 +1,142 @@
+{
+  "sampleIndex": 20,
+  "startedAt": "2026-03-14T19:14:46+08:00",
+  "finishedAt": "2026-03-14T19:16:22+08:00",
+  "requestedCommands": [
+    "qpy.runtime.status"
+  ],
+  "ok": true,
+  "eventWindowSec": 95.0,
+  "selectedNode": {
+    "nodeId": "masked:354a779c25",
+    "displayName": "QuecPython Windows Lab Node",
+    "platform": "quectel",
+    "version": "v1.0.0-test",
+    "deviceFamily": "quecpython",
+    "caps": [
+      "diagnostics",
+      "network",
+      "telemetry"
+    ],
+    "commands": [
+      "qpy.cell.info",
+      "qpy.device.info",
+      "qpy.device.status",
+      "qpy.net.diag",
+      "qpy.runtime.status",
+      "qpy.sim.info",
+      "qpy.tools.catalog",
+      "tool_device_info",
+      "tool_net_diag"
+    ],
+    "paired": true,
+    "connected": true,
+    "connectedAtMs": 1773479922155,
+    "remoteIp": "masked:7f1a54378a"
+  },
+  "error": null,
+  "commandResults": [
+    {
+      "command": "qpy.runtime.status",
+      "ok": true,
+      "startedAtMs": 1773486886498,
+      "finishedAtMs": 1773486887377,
+      "durationMs": 879,
+      "summary": {
+        "online": true,
+        "connect_attempts": 1,
+        "connect_successes": 1,
+        "reconnect_count": 0,
+        "consecutive_failures": 0,
+        "last_error_code": "OUTBOX_SEND_FAILED",
+        "last_event": "node.invoke.request",
+        "last_cmd_tool": "qpy.runtime.status",
+        "pending_cmds": 0,
+        "outbox_depth": 0,
+        "result_cache_depth": 29,
+        "device_token_cached": "masked:3cbc87c768",
+        "last_signer": {
+          "logical_device_id": "masked:2d532581bc",
+          "url": "http://124.70.221.88:8787/sign",
+          "signed_at": 1773479921965
+        },
+        "status": "succeeded",
+        "result_code": "OK",
+        "duration_ms": 2,
+        "tool": "qpy.runtime.status",
+        "requested_tool": "qpy.runtime.status",
+        "error": null
+      }
+    }
+  ],
+  "eventCount": 6,
+  "events": [
+    {
+      "type": "event",
+      "event": "connect.challenge",
+      "inner_event": null,
+      "payload_keys": [
+        "nonce",
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "health",
+      "inner_event": null,
+      "payload_keys": [
+        "agents",
+        "channelLabels",
+        "channelOrder",
+        "channels",
+        "defaultAgentId",
+        "durationMs",
+        "heartbeatSeconds",
+        "ok",
+        "sessions",
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "tick",
+      "inner_event": null,
+      "payload_keys": [
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "health",
+      "inner_event": null,
+      "payload_keys": [
+        "agents",
+        "channelLabels",
+        "channelOrder",
+        "channels",
+        "defaultAgentId",
+        "durationMs",
+        "heartbeatSeconds",
+        "ok",
+        "sessions",
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "tick",
+      "inner_event": null,
+      "payload_keys": [
+        "ts"
+      ]
+    },
+    {
+      "type": "event",
+      "event": "tick",
+      "inner_event": null,
+      "payload_keys": [
+        "ts"
+      ]
+    }
+  ]
+}

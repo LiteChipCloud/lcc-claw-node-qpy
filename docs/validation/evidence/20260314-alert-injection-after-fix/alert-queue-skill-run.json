@@ -1,0 +1,11 @@
+{
+  "action": "run",
+  "port": "COM6",
+  "baud": 115200,
+  "policy": "NO_COMMERCIAL_VERDICT",
+  "allow_qpycom_risk": false,
+  "path": "/usr/qpy_alert_queue_skill.py",
+  "exec_path": "usr/qpy_alert_queue_skill.py",
+  "ok": true,
+  "raw": "<CR><LF>>>> <CR><LF>>>> <CR><LF>>>> import example<CR><LF>>>> example.exec('usr/qpy_alert_queue_skill.py')<CR><LF>before_online=True<CR><LF>transport=ok<CR><LF>queue_called<CR><LF>after_outbox=1<CR><LF>after_last_outbox_error=<CR><LF>alert_queued_skill<CR><LF>>>> print('run_exec_sent')<CR><LF>run_exec_sent<CR><LF>>>>"
+}

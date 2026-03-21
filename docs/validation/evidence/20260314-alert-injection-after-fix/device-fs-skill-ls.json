@@ -1,0 +1,12 @@
+﻿{
+  "action": "ls",
+  "port": "COM6",
+  "baud": 115200,
+  "policy": "NO_COMMERCIAL_VERDICT",
+  "allow_qpycom_risk": false,
+  "path": "/usr",
+  "backend": "repl",
+  "ok": false,
+  "raw": "ERR: Exception calling \"Open\" with \"0\" argument(s): \"A device attached to the system is not functioning.\n\"",
+  "rows": []
+}
